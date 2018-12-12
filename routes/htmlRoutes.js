@@ -12,13 +12,26 @@ module.exports = function(app) {
     res.render("login");
   });
 
-  // Load example page and pass in an example by id
-  app.get("/example/:id", function(req, res) {
-    db.Example.findOne({ where: { id: req.params.id } }).then(function(dbExample) {
-      res.render("example", {
-        example: dbExample
+  // This route feeds the user all the data they need to render their dashboard page.
+  // TODO: add handlebars-ready flags to each list item that specify whether that item was originated by the current user - that will affect the user's rights to delete or not.
+  app.get("/user/dash", function (req, res) {
+    const fullData = {};
+
+    db.User.getviewables({ where: { viewerId: req.user.id } })
+      .then(function (data) {
+
+          console.log(data);
+          fullData.viewables = data
+
+        db.User.getusables({ where: { viewerId: req.user.id } })
+          .then(function (data) {
+
+            console.log(data);
+            fullData.usables = data
+
+            res.render("", fullData);
+          });
       });
-    });
   });
 
   // Render 404 page for any unmatched routes

@@ -9,8 +9,7 @@ module.exports = function (sequelize, dataTypes) {
             }
         },
         price: {
-            type: dataTypes.DECIMAL(10, 2),
-            allowNull: true,
+            type: dataTypes.DECIMAL(10,2),
             validate: {
                 isFloat: true
             }
@@ -29,4 +28,3 @@ module.exports = function (sequelize, dataTypes) {
     
     return Task;
 }
-

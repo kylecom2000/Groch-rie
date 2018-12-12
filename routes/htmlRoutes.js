@@ -11,7 +11,8 @@ module.exports = function(app) {
     });
   });
 
-  // Load example page and pass in an example by id
+  // This route feeds the user all the data they need to render their dashboard page.
+  // TODO: add handlebars-ready flags to each list item that specify whether that item was originated by the current user - that will affect the user's rights to delete or not.
   app.get("/user/dash", function (req, res) {
     const fullData = {};
 

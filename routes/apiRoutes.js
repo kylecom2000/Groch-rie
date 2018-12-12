@@ -61,26 +61,4 @@ module.exports = function (app) {
       });
   });
 
-  app.get("/api/user/dash", function (req, res) {
-    const fullData = {};
-
-    db.User.getviewables({ where: { viewerId: req.user.id } })
-      .then(function (data) {
-
-          console.log(data);
-          fullData.viewables = data
-
-        db.User.getusables({ where: { viewerId: req.user.id } })
-          .then(function (data) {
-
-            console.log(data);
-            fullData.usables = data
-
-            res.json(fullData);
-          });
-      });
-
-
-
-  });
 };

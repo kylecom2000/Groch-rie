@@ -12,12 +12,24 @@ module.exports = function(app) {
   });
 
   // Load example page and pass in an example by id
-  app.get("/example/:id", function(req, res) {
-    db.Example.findOne({ where: { id: req.params.id } }).then(function(dbExample) {
-      res.render("example", {
-        example: dbExample
+  app.get("/user/dash", function (req, res) {
+    const fullData = {};
+
+    db.User.getviewables({ where: { viewerId: req.user.id } })
+      .then(function (data) {
+
+          console.log(data);
+          fullData.viewables = data
+
+        db.User.getusables({ where: { viewerId: req.user.id } })
+          .then(function (data) {
+
+            console.log(data);
+            fullData.usables = data
+
+            res.render("", fullData);
+          });
       });
-    });
   });
 
   // Render 404 page for any unmatched routes

@@ -1,5 +1,5 @@
 {
-  "name": "node-handlebars-boilerplate",
+  "name": "handlebars-boilerplate",
   "version": "1.0.0",
   "description": "Project 2 Starter",
   "main": "server.js",
@@ -15,6 +15,7 @@
     "express": "^4.16.3",
     "express-handlebars": "^3.0.0",
     "mysql2": "^1.5.3",
+    "semantic-ui": "^2.4.2",
     "sequelize": "^4.38.0"
   },
   "devDependencies": {
@@ -25,5 +26,17 @@
     "eslint-plugin-prettier": "^2.6.2",
     "mocha": "^5.2.0",
     "prettier": "^1.13.7"
-  }
+  },
+  "directories": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kylecom2000/Project2.git"
+  },
+  "author": "",
+  "bugs": {
+    "url": "https://github.com/kylecom2000/Project2/issues"
+  },
+  "homepage": "https://github.com/kylecom2000/Project2#readme"
 }

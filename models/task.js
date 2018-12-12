@@ -14,6 +14,10 @@ module.exports = function (sequelize, dataTypes) {
             validate: {
                 isFloat: true
             }
+        },
+        completed: {
+            type: dataTypes.BOOLEAN,
+            defaultValues: false
         }
     });
     

@@ -9,7 +9,7 @@ module.exports = function (sequelize, dataTypes) {
             }
         },
         price: {
-            type: dataTypes.dataType.DECIMAL(10, 2),
+            type: dataTypes.DECIMAL(10, 2),
             allowNull: true,
             validate: {
                 isFloat: true

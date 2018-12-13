@@ -17,6 +17,14 @@ module.exports = function (sequelize, dataTypes) {
         completed: {
             type: dataTypes.BOOLEAN,
             defaultValues: false
+        },
+        createdAt: {
+            type: dataTypes.DATETIME,
+            defaultValue: Sequelize.NOW
+        },
+        updatedAt: {
+            type: dataType.DATETIME,
+            defaultValues: Sequelize.NOW
         }
     });
     

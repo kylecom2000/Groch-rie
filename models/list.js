@@ -14,11 +14,19 @@ module.exports = function (sequelize, dataTypes) {
             validate: {
                 isIn: [["Private", "Shared"]]
             }
+        },
+        createdAt: {
+            type: dataTypes.DATETIME,
+            defaultValue: Sequelize.NOW
+        },
+        updatedAt: {
+            type: dataType.DATETIME,
+            defaultValues: Sequelize.NOW
         }
     });
 
     List.associate = function(models) {
-        List.belongsTo(models.User, {as: "creator", foreignKey: "creatorId"});
+        List.belongsTo(models.User, {onDelete: "cascade", as: "creator", foreignKey: "creatorId"});
         List.belongsToMany(models.User, {through: "listViewers", as: "viewable", foreignKey: "viewableId"});
         List.belongsToMany(models.User, {through: "listUsers", as: "usable", foreignKey: "usableId"});
         List.hasMany(models.Task, {as: "list", foreignKey: "listId"});

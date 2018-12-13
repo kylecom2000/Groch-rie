@@ -1,3 +1,4 @@
+const Sequelize = require("sequelize")
 module.exports = function (sequelize, dataTypes) {
 
     const User = sequelize.define("User", {
@@ -14,6 +15,14 @@ module.exports = function (sequelize, dataTypes) {
         password: {
             type: dataTypes.STRING,
             allowNull: false
+        },
+        createdAt: {
+            type: dataTypes.DATETIME,
+            defaultValue: Sequelize.NOW
+        },
+        updatedAt: {
+            type: dataType.DATETIME,
+            defaultValues: Sequelize.NOW
         }
     });
 

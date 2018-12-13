@@ -3,7 +3,7 @@
 # Grochèrie
 ## A Shared Shopping List App.
 
-# [Deployed on Heroku](***HEROKU REPO WEBSITE***)
+# [Deployed on Heroku](https://grocherie.herokuapp.com/)
 
 #### Team Members
 Project Two - Team Six

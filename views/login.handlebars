@@ -10,7 +10,7 @@
         <div class="field">
           <div class="ui left icon input">
             <i class="user icon"></i>
-            <input id="name" type="text" name="email" placeholder="E-mail address">
+            <input id="email" type="text" name="email" placeholder="E-mail address">
           </div>
         </div>
         <div class="field">
@@ -26,7 +26,7 @@
 
     </form>
 
-    <div class="ui message">
+    <div class="ucleai message">
       New to us? <a href="#">Sign Up</a>
     </div>
   </div>
@@ -35,7 +35,7 @@
 <script type="text/javascript">
   $("#submitBtn").on("click", (event) => {
     let login = {
-      name: $("#name").val().trim(),
+      email: $("#email").val().trim(),
       password: $("#password").val().trim()
     }
 

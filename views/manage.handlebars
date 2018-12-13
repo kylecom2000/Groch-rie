@@ -1,0 +1,51 @@
+<div class="ui top attached tabular menu">
+    <a class="item active" data-tab="first">Manage</a>
+    <a class="item" data-tab="second">Shop</a>
+    <a class="item" data-tab="third">Wallet</a>
+</div>
+
+<div class="ui bottom attached tab segment active" data-tab="first">
+    <h1>Manage</h1>
+
+    <div class="ui styled accordion">
+        <div class="active title">
+            <i class="dropdown icon"></i>
+            ROOMATES
+        </div>
+        <div class="active content">
+            <p>Fruit Loops Cereal</p>
+        </div>
+        <div class="title">
+            <i class="dropdown icon"></i>
+            FAMILY
+        </div>
+        <div class="content">
+            <p>Toilet Paper</p>
+        </div>
+        <div class="title">
+            <i class="dropdown icon"></i>
+            OFFICE
+        </div>
+        <div class="content">
+            <p>Epson Printer</p>
+        </div>
+    </div>
+</div>
+
+<div class="ui bottom attached tab segment" data-tab="second">
+    Shop
+</div>
+
+<div class="ui bottom attached tab segment" data-tab="third">
+    Wallet
+</div>
+
+<script type="text/javascript">
+$('.menu .item')
+    .tab()
+;
+
+$('.ui.accordion')
+    .accordion()
+;
+</script>

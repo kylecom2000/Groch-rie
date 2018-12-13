@@ -1,6 +1,6 @@
 # UT Coding Boot Camp Team Project
 
-# Grocèrie
+# Grochèrie
 ## A Shared Shopping List App.
 
 # [Deployed on Heroku](***HEROKU REPO WEBSITE***)

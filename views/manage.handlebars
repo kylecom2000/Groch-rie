@@ -17,13 +17,6 @@
         </div>
         <div class="title">
             <i class="dropdown icon"></i>
-            FAMILY
-        </div>
-        <div class="content">
-            <p>Toilet Paper</p>
-        </div>
-        <div class="title">
-            <i class="dropdown icon"></i>
             OFFICE
         </div>
         <div class="content">
@@ -33,7 +26,33 @@
 </div>
 
 <div class="ui bottom attached tab segment" data-tab="second">
-    Shop
+  <h1> Pick a list! </h1>
+  <div class="ui styled accordion">
+    <div class="title">
+        <i class="dropdown icon"></i>
+        FAMILY
+    </div>
+
+    <div class="content">
+      <div class="ui middle aligned divided list">
+
+        {{#each examples}}
+        <div class="item">
+          <div class="right floated content">
+            <div class="ui checkbox">
+              <input type="checkbox" name="example">
+              <label></label>
+            </div>
+          </div>
+          <div class="content">
+            {{this.text}}
+          </div>
+        </div>
+        {{/each}}
+
+      </div>
+    </div>
+  </div>
 </div>
 
 <div class="ui bottom attached tab segment" data-tab="third">
@@ -41,6 +60,10 @@
 </div>
 
 <script type="text/javascript">
+$('.checkbox').on('click', function(event){
+  console.log("checking");
+});
+
 $('.menu .item')
     .tab()
 ;

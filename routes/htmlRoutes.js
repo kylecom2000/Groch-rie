@@ -9,7 +9,8 @@ module.exports = function(app) {
     //     examples: dbExamples
     //   });
     // });
-    res.render("manage");
+
+    res.render("signup");
   });
 
   // This route feeds the user all the data they need to render their dashboard page.

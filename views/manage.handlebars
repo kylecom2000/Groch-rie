@@ -39,7 +39,7 @@
         {{#each examples}}
         <div class="item">
           <div class="right floated content">
-            <div class="ui checkbox">
+            <div class="ui checkbox" data-id={{this.id}}>
               <input type="checkbox" name="example">
               <label></label>
             </div>
@@ -61,7 +61,7 @@
 
 <script type="text/javascript">
 $('.checkbox').on('click', function(event){
-  console.log("checking");
+  console.log($(this).data("id"));
 });
 
 $('.menu .item')

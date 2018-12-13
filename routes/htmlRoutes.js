@@ -9,7 +9,7 @@ module.exports = function(app) {
     //     examples: dbExamples
     //   });
     // });
-    res.render("index");
+    res.render("signup");
   });
 
   // Load example page and pass in an example by id

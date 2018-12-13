@@ -2,21 +2,43 @@
   <div class="column">
     <h2 class="ui teal image header">
       <div class="content">
-        Log in
+        Log-in to your account
       </div>
     </h2>
-    <form class="ui large form" action="submit">
+    <form class="ui large form">
       <div class="ui stacked segment">
         <div class="field">
-          <input type="text" name="email" value="placeholder">
+          <div class="ui left icon input">
+            <i class="user icon"></i>
+            <input id="name" type="text" name="email" placeholder="E-mail address">
+          </div>
         </div>
         <div class="field">
-          <input type="password" name="password" value="Password">
+          <div class="ui left icon input">
+            <i class="lock icon"></i>
+            <input id="password" type="password" name="password" placeholder="Password">
+          </div>
         </div>
-        <div class="ui fluid large teal submit button">
-          Login
-        </div>
+        <div id="submitBtn" class="ui fluid large teal submit button">Login</div>
       </div>
+
+      <div class="ui error message"></div>
+
     </form>
+
+    <div class="ui message">
+      New to us? <a href="#">Sign Up</a>
+    </div>
   </div>
 </div>
+
+<script type="text/javascript">
+  $("#submitBtn").on("click", (event) => {
+    let login = {
+      name: $("#name").val().trim(),
+      password: $("#password").val().trim()
+    }
+
+    console.log(login);
+  });
+</script>

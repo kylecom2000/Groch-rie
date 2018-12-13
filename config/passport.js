@@ -8,7 +8,7 @@ passport.use(new LocalStrategy(
     userName: "userName"
   },
   function(userName, password, done){
-    console.log("PSSPRT")
+    console.log("PSSPRT");
     db.User.findOne({
       where: {
         userName: userName
@@ -20,7 +20,7 @@ passport.use(new LocalStrategy(
         return done(null, false, { message: "Incorrect password"});
       }
       return done(null, dbUser);
-    })
+    });
   }
 ));
 

@@ -1,7 +1,6 @@
 const bcrypt = require("bcrypt-nodejs");
 
-module.exports = function (sequelize, dataTypes) {
-
+module.exports = function(sequelize, dataTypes) {
     const User = sequelize.define("User", {
         userName: {
             type: dataTypes.STRING,
@@ -26,11 +25,12 @@ module.exports = function (sequelize, dataTypes) {
 
     User.prototype.validPassword = function(password){
         return bcrypt.compareSync(password, this.password);
-      }
+      };
 
     User.addHook("beforeCreate", function(user, options) {
+        console.log(options);
         user.password = bcrypt.hashSync(user.password, bcrypt.genSaltSync(12), null);
-    })
+    });
 
     User.associate = function (models) {
         User.hasMany(models.Task, {foreignKey: "originatorId", as: "originator"});
@@ -38,7 +38,7 @@ module.exports = function (sequelize, dataTypes) {
         User.hasMany(models.List, {foreignKey: "creatorId", as: "creator"});
         User.belongsToMany(models.List, {through: "listViewers", as: "viewer", foreignKey: "viewerId"});
         User.belongsToMany(models.List, {through: "listUsers", as: "user", foreignKey: "userId"});
-    }
+    };
 
     return User;
-}
+};

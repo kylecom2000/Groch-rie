@@ -1,0 +1,99 @@
+<div class="ui top attached tabular menu">
+    <a class="item active" data-tab="first">Manage</a>
+    <a class="item" data-tab="second">Shop</a>
+    <a class="item" data-tab="third">Wallet</a>
+</div>
+
+<div class="ui bottom attached tab segment active" data-tab="first">
+    <h1>Manage</h1>
+    <div class="ui styled accordion">
+        <div class="title">
+            <i class="dropdown icon"></i>
+            ROOMATES
+            <span id="add-user-button" style="padding-left: 10px"><i class="large user plus icon"></i></span>
+        </div>
+        <div class="content">
+            <ul style="list-style: none">
+                <li>New Item
+                    <span id="new-item-button" style="float:right"><i class="teal large plus square icon"></i></span>
+                </li><hr>
+                <li>Bananas
+                    <span id="delete-item-button" style="float:right"><i class="red large minus square icon"></i></span>
+                </li><hr>
+                <li>Bananas
+                    <span id="delete-item-button" style="float:right"><i class="red large minus square icon"></i></span>
+                </li><hr>
+            </ul>
+        </div>
+        <div class="title">
+            <i class="dropdown icon"></i>
+            FAMILY
+        </div>
+        <div class="content">
+            <ul style="list-style: none">
+                <li>Bananas</li><hr>
+                <li>Apples</li><hr>
+                <li>AA Batteries</li><hr>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<div class="ui bottom attached tab segment" data-tab="second">
+  <h1> Pick a list! </h1>
+  <div class="ui styled accordion">
+    <div class="title">
+        <i class="dropdown icon"></i>
+        FAMILY
+    </div>
+
+    <div class="content">
+      <div class="ui middle aligned divided list">
+
+        {{#each examples}}
+        <div class="item">
+          <div class="right floated content">
+            <div class="ui checkbox" data-id={{this.id}}>
+              <input type="checkbox" name="example">
+              <label></label>
+            </div>
+          </div>
+          <div class="content">
+            {{this.text}}
+          </div>
+        </div>
+        {{/each}}
+
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="ui bottom attached tab segment" data-tab="third">
+    Wallet
+</div>
+
+<script type="text/javascript">
+$('.checkbox').on('click', function(event){
+  console.log($(this).data("id"));
+});
+
+$('.menu .item')
+    .tab()
+;
+
+$('.ui.accordion')
+    .accordion()
+;
+
+$("#add-user-button").click(function() {
+  alert("Add User");
+});
+$("#new-item-button").click(function() {
+  alert("Add Item");
+});
+$("#delete-item-button").click(function() {
+  alert("Delete Item");
+});
+
+</script>

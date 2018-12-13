@@ -1,8 +1,9 @@
 # UT Coding Boot Camp Team Project
 
-# (TITLE OF APP)
+# Grochèrie
+## A Shared Shopping List App.
 
-# [Deployed on Heroku](***HEROKU REPO WEBSITE***)
+# [Deployed on Heroku](https://grocherie.herokuapp.com/)
 
 #### Team Members
 Project Two - Team Six

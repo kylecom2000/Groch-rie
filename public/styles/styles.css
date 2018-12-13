@@ -1,7 +1,13 @@
-.list-group-item {
-  line-height: 2.5;
-}
-
+/* Login Page */
 body {
-  color: blue;
+  background-color: #DADADA;
+}
+body > .grid {
+  height: 100%;
+}
+.image {
+  margin-top: -100px;
+}
+.column {
+  max-width: 450px;
 }

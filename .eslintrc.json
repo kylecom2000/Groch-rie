@@ -39,5 +39,11 @@
             "always"
         ],
         "prettier/prettier": "error"
-    }
+    },
+    
+    "prefer-const": ["error", {
+        "destructuring": "any",
+        "ignoreReadBeforeAssign": false
+    }]
+    
 }

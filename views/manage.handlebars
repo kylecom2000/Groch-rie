@@ -6,21 +6,35 @@
 
 <div class="ui bottom attached tab segment active" data-tab="first">
     <h1>Manage</h1>
-
     <div class="ui styled accordion">
-        <div class="active title">
+        <div class="title">
             <i class="dropdown icon"></i>
             ROOMATES
+            <span id="add-user-button" style="padding-left: 10px"><i class="large user plus icon"></i></span>
         </div>
-        <div class="active content">
-            <p>Fruit Loops Cereal</p>
+        <div class="content">
+            <ul style="list-style: none">
+                <li>New Item
+                    <span id="new-item-button" style="float:right"><i class="teal large plus square icon"></i></span>
+                </li><hr>
+                <li>Bananas
+                    <span id="delete-item-button" style="float:right"><i class="red large minus square icon"></i></span>
+                </li><hr>
+                <li>Bananas
+                    <span id="delete-item-button" style="float:right"><i class="red large minus square icon"></i></span>
+                </li><hr>
+            </ul>
         </div>
         <div class="title">
             <i class="dropdown icon"></i>
-            OFFICE
+            FAMILY
         </div>
         <div class="content">
-            <p>Epson Printer</p>
+            <ul style="list-style: none">
+                <li>Bananas</li><hr>
+                <li>Apples</li><hr>
+                <li>AA Batteries</li><hr>
+            </ul>
         </div>
     </div>
 </div>
@@ -71,4 +85,6 @@ $('.menu .item')
 $('.ui.accordion')
     .accordion()
 ;
+
+
 </script>

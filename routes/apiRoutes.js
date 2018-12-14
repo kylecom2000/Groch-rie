@@ -77,23 +77,9 @@ module.exports = function(app, io) {
   });
 
   app.put("/api/task/checkbox", function (req, res) {
-    db.Task.update({ completed: req.body.completed }, { where: { id: req.body.id } }).then(function () {
+    db.Task.update({ completed: req.body.completed }, { where: { id: req.body.id } }).then(function (data) {
 
-        db.Task.findAll({ where: { id: message.id } }).then(function (data) {
-            data[0].getList({ include: ["Cheri"] }).then(function (data) {
-                data.Cheri.forEach(function (entry) {
-                    if (entry.currentSocket) {
-                        io.sockets.in(entry.currentSocket).emit("checkupdate", { id: message.id, completed: message.completed });
-                    }
-                    db.User.findAll({ where: { id: data.id } }).then(function (dbUser) {
-                        if (dbUser[0].currentSocket) {
-                            io.sockets.in(dbUser[0].currentSocket).emit("checkupdate", { id: message.id, completed: message.completed });
-                        }
-                        res.status(200).end();
-                    });
-                });
-            });
-        });
+        res.json(data);
 
     });
   });

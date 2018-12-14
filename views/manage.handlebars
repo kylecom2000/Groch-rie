@@ -1,8 +1,10 @@
 <div class="ui top attached tabular menu">
     <a class="item active" data-tab="first">Manage</a>
     <a class="item" data-tab="second">Shop</a>
-    <a class="item" data-tab="third">Wallet</a>
+    {{!-- <a class="item" data-tab="third">Wallet</a> --}}
 </div>
+
+<br><br>
 
 <div class="container">
     <div class="ui bottom attached tab segment active" data-tab="first">
@@ -11,35 +13,66 @@
 
             <div class="title">
                 <i class="dropdown icon"></i>
-                ROOMATES
-                <span id="add-user-button" style="padding-left: 10px"><i class="large user plus icon"></i></span>
+                <span>ROOMATES</span>
+                <span class="add-user-button" style="padding-left: 10px"><i class="large user plus icon"></i></span>
             </div>
 
             <div class="content">
-                <ul style="list-style: none">
-                    <li>New Item
-                        <span id="new-item-button" style="float:right"><i class="teal large plus square icon"></i></span>
-                    </li><hr>
-                    <li>Bananas
-                        <span id="delete-item-button" style="float:right"><i class="red large minus square icon"></i></span>
-                    </li><hr>
-                    <li>Trash Bags
-                        <span id="delete-item-button" style="float:right"><i class="red large minus square icon"></i></span>
-                    </li><hr>
-                </ul>
+                <div class="ui middle aligned divided list" style="padding-left:25px">
+
+                    <div style="padding-top:20px">New Item
+                        <span class="new-item-button" style="float:right" data-id="new-item"><i class="teal large plus square icon"></i></span>
+                    </div><hr>
+
+                    <div>
+                            <span class="content" style="padding-left: 0px">Placeholder</span>
+                            <span class="delete-item-button" style="float:right" data-id="placeholder"><i class="red large minus square icon"></i></span>
+                            <p style="font-size:12px">Added by: user</p>
+                            <hr>
+                    </div>
+
+                    {{#each examples}}
+                        <div>
+                            <li>
+                                <span class="content" style="padding-left: 0px">{{this.text}}</span>
+                                <span class="delete-item-button" style="float:right" data-id={{this.id}}><i class="red large minus square icon"></i></span>
+                                <p style="font-size:12px">Added by: {{this.text}}</p>
+                            </li><hr>
+                        </div>
+                    {{/each}}
+                </div>
             </div>
 
             <div class="title">
                 <i class="dropdown icon"></i>
-                FAMILY
+                <span>OFFICE</span>
+                <span class="add-user-button" style="padding-left: 10px"><i class="large user plus icon"></i></span>
             </div>
 
             <div class="content">
-                <ul style="list-style: none">
-                    <li>Bananas</li><hr>
-                    <li>Apples</li><hr>
-                    <li>AA Batteries</li><hr>
-                </ul>
+                <div class="ui middle aligned divided list" style="padding-left:25px">
+
+                    <div style="padding-top:20px">New Item
+                        <span class="new-item-button" style="float:right"><i class="teal large plus square icon"></i></span>
+                    </div><hr>
+
+                    <div>
+                            <span class="content" style="padding-left: 0px">Placeholder</span>
+                            <span class="delete-item-button" style="float:right" data-id="placeholder"><i class="red large minus square icon"></i></span>
+                            <p style="font-size:12px">Added by: user</p>
+                            <hr>
+                    </div>
+
+                    {{#each examples}}
+                        <div>
+                            <li>
+                                <span class="content" style="padding-left: 0px">{{this.text}}</span>
+                                <span class="delete-item-button" style="float:right" data-id={{this.id}}><i class="red large minus square icon"></i></span>
+                                <p style="font-size:12px">Added by: {{this.text}}</p>
+                            </li><hr>
+                        </div>
+                    {{/each}}
+                </div>
             </div>
 
         </div>
@@ -76,9 +109,9 @@
     </div>
 </div>
 
-<div class="ui bottom attached tab segment" data-tab="third">
+{{!-- <div class="ui bottom attached tab segment" data-tab="third">
     Wallet
-</div>
+</div> --}}
 
 <script type="text/javascript">
 
@@ -86,17 +119,22 @@ $('.checkbox').on('click', function(event){
   console.log($(this).data("id"));
 });
 $('.menu .item')
-    .tab();
+    .tab()
+;
 $('.ui.accordion')
-    .accordion();
-$("#add-user-button").click(function() {
-  alert("Add User");
+    .accordion()
+;
+$(".add-user-button").click(function() {
+    alert("Add User");
+    console.log($(this).data("class"));
 });
-$("#new-item-button").click(function() {
-  alert("Add Item");
+$(".new-item-button").click(function() {
+    alert("Add Item");
+    console.log($(this).data("id"));
 });
-$("#delete-item-button").click(function() {
-  alert("Delete Item");
+$(".delete-item-button").click(function() {
+    alert("Delete Item");
+    console.log($(this).data("id"));
 });
 
 </script>

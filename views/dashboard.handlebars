@@ -115,7 +115,15 @@
 
 <script type="text/javascript">
 $('.checkbox').on('click', function(event){
-  console.log($(this).data("id"));
+  let updateTask = {
+    id: $(this).data("id")
+  }
+  const taskId = $(this).data("id");
+  $.ajax({
+    method: "PUT",
+    url: "/api/user/list",
+    data: taskId
+  })
 });
 $('.menu .item')
     .tab()
@@ -136,6 +144,6 @@ $(".delete-item-button").click(function() {
     console.log($(this).data("id"));
 });
 
-var socket = io.connect(window.location);
+// var socket = io.connect(window.location);
 
 </script>

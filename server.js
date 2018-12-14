@@ -28,6 +28,36 @@ app.engine(
 );
 app.set("view engine", "handlebars");
 
+<<<<<<< Updated upstream
+=======
+// TOCHANGE!!! this will take the http user and feed it to the socket user. NOT A GOOD PLAN!!!
+let lastUser = null;
+  // This route feeds the user all the data they need to render their dashboard page.
+  // TODO: add handlebars-ready flags to each list item that specify whether that item was originated by the current user - that will affect the user's rights to delete or not.
+  app.get("/user/dash", function (req, res) {
+    const fullData = {};
+
+    lastUser = req.user;
+    db.User.getviewables({ where: { viewerId: req.user.id } })
+      .then(function (data) {
+
+          console.log(data);
+          fullData.viewables = data;
+
+        db.User.getusables({ where: { viewerId: req.user.id } })
+          .then(function (data) {
+
+            console.log(data);
+            fullData.usables = data;
+
+            res.render("", fullData);
+          });
+      });
+  });
+
+console.log("LAST USER", lastUser);
+
+>>>>>>> Stashed changes
 // Routes
 require("./routes/apiRoutes")(app);
 require("./routes/htmlRoutes")(app);
@@ -50,6 +80,22 @@ db.sequelize.sync({force: true}).then(function() {
       PORT
     );
   });
+<<<<<<< Updated upstream
+=======
+
+
+  // Socket setup
+  io = socket(server);
+
+  io.on("connection", function (socketId) {
+    console.log(socketId.id);
+    db.User.update({currentSocket: socketId.id}, {where: {id: 1}}).then(function(data) {
+      console.log(data);
+      lastUser = null;
+    });
+  });
+
+>>>>>>> Stashed changes
 });
 
 module.exports = app;

@@ -1,6 +1,6 @@
 var db = require("../models");
 
-module.exports = function(app, io) {
+module.exports = function(app) {
   // This route assumes that the user is known and given as req.user.id (may need to come from passport).
   // It further expects the front end has formatted the request in json with fields for the text of the task, price, and the list it belongs to.
   app.post("/api/task", function(req, res) {
@@ -10,7 +10,6 @@ module.exports = function(app, io) {
       originatorId: req.user.id,
       listId: req.body.list
     }).then(function(data) {
-      // console.log(data);
       res.json(data);
     });
   });

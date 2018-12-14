@@ -1,9 +1,10 @@
-require("dotenv").config();
+// require("dotenv").config();
 var express = require("express");
 var exphbs = require("express-handlebars");
 const passport = require("./config/passport");
 const session = require("express-session");
 const path = require("path");
+const socket = require("socket.io");
 
 var db = require("./models");
 
@@ -54,10 +55,11 @@ let lastUser = null;
   });
 
 console.log("LAST USER", lastUser);
-
 // Routes
 require("./routes/apiRoutes")(app);
 require("./routes/htmlRoutes")(app);
+
+
 
 var syncOptions = { force: false };
 
@@ -67,10 +69,12 @@ if (process.env.NODE_ENV === "test") {
   syncOptions.force = true;
 }
 
+  var io;
+
 // Starting the server, syncing our models ------------------------------------/
 db.sequelize.sync({force: true}).then(function() {
   require(path.join(__dirname, "./seeder/seeds.js"))(db);
-  app.listen(PORT, function() {
+  const server = app.listen(PORT, function() {
     console.log(
       "==> 🌎  Listening on port %s. Visit http://localhost:%s/ in your browser.",
       PORT,

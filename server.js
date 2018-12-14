@@ -28,8 +28,6 @@ app.engine(
 );
 app.set("view engine", "handlebars");
 
-<<<<<<< Updated upstream
-=======
 // TOCHANGE!!! this will take the http user and feed it to the socket user. NOT A GOOD PLAN!!!
 let lastUser = null;
   // This route feeds the user all the data they need to render their dashboard page.
@@ -57,7 +55,6 @@ let lastUser = null;
 
 console.log("LAST USER", lastUser);
 
->>>>>>> Stashed changes
 // Routes
 require("./routes/apiRoutes")(app);
 require("./routes/htmlRoutes")(app);
@@ -80,8 +77,6 @@ db.sequelize.sync({force: true}).then(function() {
       PORT
     );
   });
-<<<<<<< Updated upstream
-=======
 
 
   // Socket setup
@@ -95,7 +90,6 @@ db.sequelize.sync({force: true}).then(function() {
     });
   });
 
->>>>>>> Stashed changes
 });
 
 module.exports = app;

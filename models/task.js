@@ -17,7 +17,7 @@ module.exports = function (sequelize, dataTypes) {
         },
         completed: {
             type: dataTypes.BOOLEAN,
-            defaultValues: false
+            defaultValue: false
         },
         createdAt: {
             type: dataTypes.DATE(6),
@@ -25,7 +25,7 @@ module.exports = function (sequelize, dataTypes) {
         },
         updatedAt: {
             type: dataTypes.DATE(6),
-            defaultValues: Sequelize.NOW()
+            defaultValue: Sequelize.NOW()
         }
     });
     

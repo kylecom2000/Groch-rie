@@ -25,7 +25,7 @@ module.exports = function(sequelize, dataTypes) {
         },
         updatedAt: {
             type: dataTypes.DATE(6),
-            defaultValues: Sequelize.NOW()
+            defaultValue: Sequelize.NOW()
         },
         currentSocket: {
             type: dataTypes.STRING,

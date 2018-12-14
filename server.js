@@ -54,6 +54,7 @@ let lastUser = null;
       });
   });
 
+console.log("LAST USER", lastUser);
 // Routes
 require("./routes/apiRoutes")(app);
 require("./routes/htmlRoutes")(app);
@@ -90,8 +91,8 @@ db.sequelize.sync({force: true}).then(function() {
     db.User.update({currentSocket: socketId.id}, {where: {id: 1}}).then(function(data) {
       console.log(data);
       lastUser = null;
-    })
-  })
+    });
+  });
 
 });
 

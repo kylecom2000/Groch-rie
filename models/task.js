@@ -30,10 +30,10 @@ module.exports = function (sequelize, dataTypes) {
     });
     
     Task.associate = function(models) {
-        Task.belongsTo(models.User, {as: "originator", foreignKey: "originatorId"});
-        Task.belongsTo(models.User, {as: "completer", foreignKey: "completerId"});
-        Task.belongsTo(models.List, {as: "list", foreignKey: "listId"});
-    }
+        Task.belongsTo(models.User, {as: "Originator", foreignKey: "originatorId"});
+        Task.belongsTo(models.User, {onDelete: "cascade", as: "Completer", foreignKey: "completerId"});
+        Task.belongsTo(models.List, {as: "List", foreignKey: "listId"});
+    };
     
     return Task;
-}
+};

@@ -61,12 +61,12 @@ module.exports = function (models) {
       ])
       
       .then(function(dbtasks) {
-        // const tasks = dbtasks;
-        // lists[0].addUser(users[2]);
-        // lists[1].addViewer(users[2]);
+        lists[0].addCheri(users[2]);
+        lists[1].addCheri(users[2]);
       });
     
     });
 
   });
+  
 };

@@ -30,18 +30,40 @@ module.exports = function(app, io) {
   });
 
   // Since the user is being created, all the data is coming in the body.
-  app.post("/api/user", function(req, res) {
+  app.post("/api/user/signup", function(req, res) {
     db.User.create(req.body).then(function(data) {
       console.log(data);
       res.redirect("/login");
     });
   });
 
-  app.get("/api/test", function(req, res) {
-    
+  // User logins
+  app.post("/api/user/login", function(req, res) {
+
+  });
+  // For list
+  app.post("/api/list/create", function(req, res) {
+
   });
 
-  app.put("/api/checkmark", function (req, res) {
+  app.delete("/api/list/delete", function(req, res) {
+
+  });
+
+  // For Task
+  app.post("/api/task/create", function(req, res) {
+
+  });
+
+  app.delete("/api/task/delete", function(req, res) {
+
+  });
+
+  app.put("/api/list/share", function(req, res) {
+
+  });
+
+  app.put("/api/task/checkbox", function (req, res) {
     db.Task.update({ completed: req.body.completed }, { where: { id: req.body.id } }).then(function () {
 
         db.Task.findAll({ where: { id: message.id } }).then(function (data) {
@@ -61,5 +83,9 @@ module.exports = function(app, io) {
         });
 
     });
+  });
+
+  app.get("/api/test", function(req, res) {
+
   });
 };

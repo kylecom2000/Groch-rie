@@ -43,24 +43,37 @@ module.exports = function(app, io) {
   });
   // For list
   app.post("/api/list/create", function(req, res) {
-
+    db.List.create(req.body).then(function(data) {
+      res.json(data);
+    });
   });
 
-  app.delete("/api/list/delete", function(req, res) {
-
+  app.delete("/api/list/delete/:id", function(req, res) {
+    db.Task.destroy({where: {id: req.params.id}}).then(function(data) {
+      res.json(data);
+    });
   });
 
   // For Task
   app.post("/api/task/create", function(req, res) {
-
+    db.Task.create(req.body).then(function(data) {
+      res.json(data);
+    });
   });
 
-  app.delete("/api/task/delete", function(req, res) {
-
+  app.delete("/api/task/delete/:id", function(req, res) {
+    db.Task.destroy({where: {id: req.params.id}}).then(function(data) {
+      res.json(data);
+    });
   });
 
+  // This route assumes that the desired sharers appear in the req.body as follows: {users: [nickNames]}
   app.put("/api/list/share", function(req, res) {
-
+    db.User.findAll({where: {nickName: req.body.users}}).then(function (data) {
+      db.List.addCheri(data).then(function(data2) {
+        res.json(data2);
+      });
+    });
   });
 
   app.put("/api/task/checkbox", function (req, res) {

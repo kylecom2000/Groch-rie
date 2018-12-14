@@ -87,7 +87,7 @@ db.sequelize.sync({ force: true }).then(function () {
   io = socket(server);
 
   io.on("connection", function (socket) {
-    console.log(socketId.id);
+    console.log(socket.id);
     db.User.update({ currentSocket: socket.id }, { where: { id: 1 } }).then(function (data) {
       console.log(data);
       lastUser = null;

@@ -1,51 +1,140 @@
 <div class="ui top attached tabular menu">
     <a class="item active" data-tab="first">Manage</a>
     <a class="item" data-tab="second">Shop</a>
-    <a class="item" data-tab="third">Wallet</a>
+    {{!-- <a class="item" data-tab="third">Wallet</a> --}}
 </div>
 
-<div class="ui bottom attached tab segment active" data-tab="first">
-    <h1>Manage</h1>
+<br><br>
 
-    <div class="ui styled accordion">
-        <div class="active title">
-            <i class="dropdown icon"></i>
-            ROOMATES
+<div class="container">
+    <div class="ui bottom attached tab segment active" data-tab="first">
+        <h1>Manage</h1>
+        <div class="ui styled accordion">
+
+            <div class="title">
+                <i class="dropdown icon"></i>
+                <span>ROOMATES</span>
+                <span class="add-user-button" style="padding-left: 10px"><i class="large user plus icon"></i></span>
+            </div>
+
+            <div class="content">
+                <div class="ui middle aligned divided list" style="padding-left:25px">
+
+                    <div style="padding-top:20px">New Item
+                        <span class="new-item-button" style="float:right" data-id="new-item"><i class="teal large plus square icon"></i></span>
+                    </div><hr>
+
+                    <div>
+                            <span class="content" style="padding-left: 0px">Placeholder</span>
+                            <span class="delete-item-button" style="float:right" data-id="placeholder"><i class="red large minus square icon"></i></span>
+                            <p style="font-size:12px">Added by: user</p>
+                            <hr>
+                    </div>
+
+                    {{#each examples}}
+                        <div>
+                            <li>
+                                <span class="content" style="padding-left: 0px">{{this.text}}</span>
+                                <span class="delete-item-button" style="float:right" data-id={{this.id}}><i class="red large minus square icon"></i></span>
+                                <p style="font-size:12px">Added by: {{this.text}}</p>
+                            </li><hr>
+                        </div>
+                    {{/each}}
+                </div>
+            </div>
+
+            <div class="title">
+                <i class="dropdown icon"></i>
+                <span>OFFICE</span>
+                <span class="add-user-button" style="padding-left: 10px"><i class="large user plus icon"></i></span>
+            </div>
+
+            <div class="content">
+                <div class="ui middle aligned divided list" style="padding-left:25px">
+
+                    <div style="padding-top:20px">New Item
+                        <span class="new-item-button" style="float:right"><i class="teal large plus square icon"></i></span>
+                    </div><hr>
+
+                    <div>
+                            <span class="content" style="padding-left: 0px">Placeholder</span>
+                            <span class="delete-item-button" style="float:right" data-id="placeholder"><i class="red large minus square icon"></i></span>
+                            <p style="font-size:12px">Added by: user</p>
+                            <hr>
+                    </div>
+
+                    {{#each examples}}
+                        <div>
+                            <li>
+                                <span class="content" style="padding-left: 0px">{{this.text}}</span>
+                                <span class="delete-item-button" style="float:right" data-id={{this.id}}><i class="red large minus square icon"></i></span>
+                                <p style="font-size:12px">Added by: {{this.text}}</p>
+                            </li><hr>
+                        </div>
+                    {{/each}}
+                </div>
+            </div>
+
         </div>
-        <div class="active content">
-            <p>Fruit Loops Cereal</p>
-        </div>
-        <div class="title">
-            <i class="dropdown icon"></i>
-            FAMILY
-        </div>
-        <div class="content">
-            <p>Toilet Paper</p>
-        </div>
-        <div class="title">
-            <i class="dropdown icon"></i>
-            OFFICE
-        </div>
-        <div class="content">
-            <p>Epson Printer</p>
+    </div>
+
+    <div class="ui bottom attached tab segment" data-tab="second">
+        <h1> Pick a list! </h1>
+        <div class="ui styled accordion">
+            <div class="title">
+                <i class="dropdown icon"></i>
+                FAMILY
+            </div>
+
+            <div class="content">
+                <div class="ui middle aligned divided list">
+
+                    {{#each examples}}
+                    <div class="item">
+                    <div class="right floated content">
+                        <div class="ui checkbox" data-id={{this.id}}>
+                        <input type="checkbox" name="example">
+                        <label></label>
+                        </div>
+                    </div>
+                    <div class="content">
+                        {{this.text}}
+                    </div>
+                    </div>
+                    {{/each}}
+
+                </div>
+            </div>
         </div>
     </div>
 </div>
 
-<div class="ui bottom attached tab segment" data-tab="second">
-    Shop
-</div>
-
-<div class="ui bottom attached tab segment" data-tab="third">
+{{!-- <div class="ui bottom attached tab segment" data-tab="third">
     Wallet
-</div>
+</div> --}}
 
 <script type="text/javascript">
+
+$('.checkbox').on('click', function(event){
+  console.log($(this).data("id"));
+});
 $('.menu .item')
     .tab()
 ;
-
 $('.ui.accordion')
     .accordion()
 ;
+$(".add-user-button").click(function() {
+    alert("Add User");
+    console.log($(this).data("class"));
+});
+$(".new-item-button").click(function() {
+    alert("Add Item");
+    console.log($(this).data("id"));
+});
+$(".delete-item-button").click(function() {
+    alert("Delete Item");
+    console.log($(this).data("id"));
+});
+
 </script>

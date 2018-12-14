@@ -9,8 +9,12 @@ module.exports = function(app) {
     //     examples: dbExamples
     //   });
     // });
-
-    res.render("signup");
+    db.Example.findAll({}).then(function(dbExamples) {
+      console.log(dbExamples);
+      res.render("manage", {
+        examples: dbExamples
+      });
+    });
   });
 
   // This route feeds the user all the data they need to render their dashboard page.
@@ -21,8 +25,8 @@ module.exports = function(app) {
     db.User.getviewables({ where: { viewerId: req.user.id } })
       .then(function (data) {
 
-        console.log(data);
-        fullData.viewables = data;
+          console.log(data);
+          fullData.viewables = data;
 
         db.User.getusables({ where: { viewerId: req.user.id } })
           .then(function (data) {

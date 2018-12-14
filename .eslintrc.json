@@ -3,7 +3,8 @@
         "es6":true,
         "browser": true,
         "commonjs": true,
-        "node": true
+        "node": true,
+        "es6": true
     },
     "extends": "prettier",
     "plugins": [
@@ -27,10 +28,6 @@
         "no-multi-spaces": "error",
         "no-unused-vars": "error",
         "camelcase": "error",
-        "indent": [
-            "error",
-            2
-        ],
         "linebreak-style": [
             "error",
             "unix"
@@ -44,5 +41,4 @@
             "always"
         ]
     }
-    
 }

@@ -18,55 +18,55 @@ module.exports = function (models) {
     }
   ])
 
-    .then(function (dbusers) {
-      const users = dbusers;
+  .then(function (dbusers) {
+    const users = dbusers;
     
-      models.List.bulkCreate([
+    models.List.bulkCreate([
+      {
+        title: "Test's List",
+        category: "Shared",
+        creatorId: 1
+      },
+      {
+        title: "Probe's List",
+        category: "Private",
+        creatorId: 2
+      }
+    ])
+
+    .then(function (dblists) {
+      const lists = dblists;
+
+      models.Task.bulkCreate([
         {
-          title: "Test's List",
-          category: "Shared",
-          creatorId: 1
+          text: "1 gal. Horizon organic whole milk",
+          originatorId: 1,
+          listId: 1
         },
         {
-          title: "Probe's List",
-          category: "Private",
-          creatorId: 2
+          text: "5 Chiquita bananas",
+          originatorId: 2,
+          listId: 1
+        },
+        {
+          text: "5 oz. baby kale",
+          originatorId: 2,
+          listId: 2
+        },
+        {
+          text: "Tampax tampons",
+          originatorId: 2,
+          listId: 2
         }
       ])
-
-        .then(function (dblists) {
-          const lists = dblists;
-
-          models.Task.bulkCreate([
-            {
-              text: "1 gal. Horizon organic whole milk",
-              originatorId: 1,
-              listId: 1
-            },
-            {
-              text: "5 Chiquita bananas",
-              originatorId: 2,
-              listId: 1
-            },
-            {
-              text: "5 oz. baby kale",
-              originatorId: 2,
-              listId: 2
-            },
-            {
-              text: "Tampax tampons",
-              originatorId: 2,
-              listId: 2
-            }
-          ])
       
-            .then(function(/* dbtasks */) {
-              lists[0].addCheri(users[2]);
-              lists[1].addCheri(users[2]);
-            });
+      .then(function(/*dbtasks*/) {
+        lists[0].addCheri(users[2]);
+        lists[1].addCheri(users[2]);
+      });
     
-        });
-
     });
+
+  });
   
 };

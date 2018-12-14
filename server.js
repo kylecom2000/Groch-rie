@@ -3,6 +3,7 @@ var express = require("express");
 var exphbs = require("express-handlebars");
 const passport = require("./config/passport");
 const session = require("express-session");
+const path = require("path");
 
 var db = require("./models");
 
@@ -40,7 +41,8 @@ if (process.env.NODE_ENV === "test") {
 }
 
 // Starting the server, syncing our models ------------------------------------/
-db.sequelize.sync(syncOptions).then(function() {
+db.sequelize.sync({force: true}).then(function() {
+  require(path.join(__dirname, "./seeder/seeds.js"))(db);
   app.listen(PORT, function() {
     console.log(
       "==> 🌎  Listening on port %s. Visit http://localhost:%s/ in your browser.",

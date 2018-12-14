@@ -7,7 +7,7 @@ const path = require("path");
 const socket = require("socket.io");
 
 var db = require("./models");
-
+require("./seeder/seeds.js")(db);
 var app = express();
 var PORT = process.env.PORT || 3000;
 

@@ -81,30 +81,30 @@
     <div class="ui bottom attached tab segment" data-tab="second">
         <h1> Pick a list! </h1>
         <div class="ui styled accordion">
-            <div class="title">
-                <i class="dropdown icon"></i>
-                FAMILY
-            </div>
 
-            <div class="content">
-                <div class="ui middle aligned divided list">
-
-                    {{#each examples}}
-                    <div class="item">
-                    <div class="right floated content">
-                        <div class="ui checkbox" data-id={{this.id}}>
-                        <input type="checkbox" name="example">
-                        <label></label>
-                        </div>
-                    </div>
-                    <div class="content">
-                        {{this.text}}
-                    </div>
-                    </div>
-                    {{/each}}
-
-                </div>
-            </div>
+          {{#each lists}}
+          <div class="title">
+              <i class="dropdown icon"></i>
+              {{this.title}}
+          </div>
+          <div class="content">
+              <div class="ui middle aligned divided list">
+                  {{#each this.Task}}
+                  <div class="item">
+                  <div class="right floated content">
+                      <div class="ui checkbox" data-id={{this.id}}>
+                      <input type="checkbox" name="example">
+                      <label></label>
+                      </div>
+                  </div>
+                  <div class="content">
+                      {{text}}
+                  </div>
+                  </div>
+                  {{/each}}
+              </div>
+          </div>
+          {{/each}}
         </div>
     </div>
 </div>
@@ -114,7 +114,6 @@
 </div> --}}
 
 <script type="text/javascript">
-
 $('.checkbox').on('click', function(event){
   console.log($(this).data("id"));
 });

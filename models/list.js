@@ -28,12 +28,11 @@ module.exports = function (sequelize, dataTypes) {
     });
 
     List.associate = function(models) {
-        List.belongsTo(models.User, {onDelete: "cascade", as: "creator", foreignKey: "creatorId"});
-        List.belongsToMany(models.User, {through: "listViewers", as: "viewable", foreignKey: "viewableId"});
-        List.belongsToMany(models.User, {through: "listUsers", as: "usable", foreignKey: "usableId"});
-        List.hasMany(models.Task, {as: "list", foreignKey: "listId"});
-    }
+        List.belongsTo(models.User, {onDelete: "cascade", as: "Creator", foreignKey: "creatorId"});
+        List.belongsToMany(models.User, {through: "listViewers", as: "Cheri", foreignKey: "SharedId"});
+        List.hasMany(models.Task, {as: "Task", foreignKey: "listId"});
+    };
 
     return List;
-}
+};
 

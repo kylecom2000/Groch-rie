@@ -43,11 +43,10 @@ module.exports = function(sequelize, dataTypes) {
     });
 
     User.associate = function (models) {
-        User.hasMany(models.Task, {foreignKey: "originatorId", as: "originator"});
-        User.hasMany(models.Task, {foreignKey: "completerId", as: "completer"});
-        User.hasMany(models.List, {foreignKey: "creatorId", as: "creator"});
-        User.belongsToMany(models.List, {through: "listViewers", as: "viewer", foreignKey: "viewerId"});
-        User.belongsToMany(models.List, {through: "listUsers", as: "user", foreignKey: "userId"});
+        User.hasMany(models.Task, {foreignKey: "originatorId", as: "Request"});
+        User.hasMany(models.Task, {foreignKey: "completerId", as: "Marker"});
+        User.hasMany(models.List, {foreignKey: "creatorId", as: "Wishlist"});
+        User.belongsToMany(models.List, {through: "listViewers", as: "Shared", foreignKey: "CheriId"});
     };
 
     return User;

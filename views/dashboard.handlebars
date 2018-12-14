@@ -88,11 +88,11 @@
               {{this.title}}
           </div>
           <div class="content">
-              <div class="ui middle aligned divided list">
+              <div style="padding-top:20px" class="ui middle aligned divided list">
                   {{#each this.Task}}
                   <div class="item">
                   <div class="right floated content">
-                      <div class="ui checkbox" data-id={{this.id}}>
+                      <div class="ui checkbox" data-completed={{this.completed}} data-id={{this.id}}>
                       <input type="checkbox" name="example">
                       <label></label>
                       </div>
@@ -115,15 +115,30 @@
 
 <script type="text/javascript">
 $('.checkbox').on('click', function(event){
-  let updateTask = {
-    id: $(this).data("id")
-  }
   const taskId = $(this).data("id");
+  let isComplete = $(this).data("completed");
+
+  // If task is not complete, set to true, else set as false
+  if (!isComplete) {
+    isComplete = true;
+    $(this).attr("data-completed", true)
+  } else {
+    isComplete = false;
+    $(this).attr("data-completed", false)
+  }
+
+  let updateTask = {
+    id: taskId,
+    completed: isComplete
+  };
+
   $.ajax({
     method: "PUT",
-    url: "/api/user/list",
-    data: taskId
-  })
+    url: "/api/task/checkbox",
+    data: updateTask
+  }).then(function() {
+    console.log("testing put ajax")
+  });
 });
 $('.menu .item')
     .tab()

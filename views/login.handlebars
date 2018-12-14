@@ -39,6 +39,21 @@
       password: $("#password").val().trim()
     }
 
+    loginUser(login.userName, login.password);
+    $("#email").val("");
+    $("#password").val("");
     console.log(login);
   });
+
+  function loginUser(email, password) {
+    $.post("/api/user/login", {
+      userName: email,
+      password: password
+    }).then(function(data) {
+      window.location.replace(data);
+      // If there's an error, log the error
+    }).catch(function(err) {
+      console.log(err);
+    });
+  }
 </script>

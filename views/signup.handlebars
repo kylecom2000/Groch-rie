@@ -41,7 +41,20 @@
       nickName: $("#name").val().trim(),
       password: $("#password").val().trim()
     }
-
+    signUpUser(login);
     console.log(login);
   });
+  
+  function signUpUser(login){
+    $.post("/api/user/signup", login).then(function(data){
+      window.location.replace(data);
+      // If there's an error, handle it by throwing up a bootstrap alert
+    }).catch(handleLoginErr);
+  }
+    function handleLoginErr(err) {
+    $("#alert .msg").text(err.responseJSON);
+    $("#alert").fadeIn(500);
+  }
+  
+  
 </script>

@@ -1,4 +1,5 @@
 var db = require("../models");
+const passport = require("passport");
 
 module.exports = function(app) {
   // This route assumes that the user is known and given as req.user.id (may need to come from passport).
@@ -12,6 +13,15 @@ module.exports = function(app) {
     }).then(function(data) {
       res.json(data);
     });
+  });
+
+  // Test to ensure we are receiving user data from server after login.
+  app.get("/api/userinfo", function(req, res){
+    if(!req.user){
+      res.json({message: "No user"});
+    } else {
+      res.json(req.user);
+    }
   });
 
   // This route assumes that the user is known and given as req.user.id (may need to come from passport).
@@ -37,9 +47,12 @@ module.exports = function(app) {
   });
 
   // User logins
-  app.post("/api/user/login", function(req, res) {
-
+  app.post("/api/user/login", passport.authenticate("local"), function(req, res) {
+    console.log("TESTT TTTEST TESTT SET SETESTEST");
+    console.log(req.user);
+    res.redirect("/dashboard/user");
   });
+
   // For list
   app.post("/api/list/create", function(req, res) {
     db.List.create(req.body).then(function(data) {
@@ -84,6 +97,7 @@ module.exports = function(app) {
   });
 
   app.get("/api/test", function(req, res) {
-
+    console.log("api/test get route req:", req);
+    res.end();
   });
 };

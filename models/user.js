@@ -1,7 +1,6 @@
-const Sequelize = require("sequelize")
-module.exports = function (sequelize, dataTypes) {
+const Sequelize = require("sequelize");
 const bcrypt = require("bcrypt-nodejs");
-
+const path = require("path");
 
 module.exports = function(sequelize, dataTypes) {
     const User = sequelize.define("User", {
@@ -21,12 +20,12 @@ module.exports = function(sequelize, dataTypes) {
             allowNull: false
         },
         createdAt: {
-            type: dataTypes.DATETIME,
-            defaultValue: Sequelize.NOW
+            type: dataTypes.DATE(6),
+            defaultValue: Sequelize.NOW()
         },
         updatedAt: {
-            type: dataType.DATETIME,
-            defaultValues: Sequelize.NOW
+            type: dataTypes.DATE(6),
+            defaultValues: Sequelize.NOW()
         },
         currentSocket: {
             type: dataTypes.STRING,

@@ -1,3 +1,5 @@
+const Sequelize = require("sequelize");
+
 module.exports = function (sequelize, dataTypes) {
 
     const List = sequelize.define("List", {
@@ -16,12 +18,12 @@ module.exports = function (sequelize, dataTypes) {
             }
         },
         createdAt: {
-            type: dataTypes.DATETIME,
-            defaultValue: Sequelize.NOW
+            type: dataTypes.DATE(6),
+            defaultValue: Sequelize.NOW()
         },
         updatedAt: {
-            type: dataType.DATETIME,
-            defaultValues: Sequelize.NOW
+            type: dataTypes.DATE(6),
+            defaultValues: Sequelize.NOW()
         }
     });
 

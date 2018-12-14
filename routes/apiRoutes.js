@@ -1,29 +1,6 @@
 var db = require("../models");
 
-module.exports = function(app) {
-  // Get all examples
-  app.get("/api/examples", function(req, res) {
-    db.Example.findAll({}).then(function(dbExamples) {
-      res.json(dbExamples);
-    });
-  });
-
-  // Create a new example
-  app.post("/api/examples", function(req, res) {
-    db.Example.create(req.body).then(function(dbExample) {
-      res.json(dbExample);
-    });
-  });
-
-  // Delete an example by id
-  app.delete("/api/examples/:id", function(req, res) {
-    db.Example.destroy({ where: { id: req.params.id } }).then(function(
-      dbExample
-    ) {
-      res.json(dbExample);
-    });
-  });
-
+module.exports = function(app, io) {
   // This route assumes that the user is known and given as req.user.id (may need to come from passport).
   // It further expects the front end has formatted the request in json with fields for the text of the task, price, and the list it belongs to.
   app.post("/api/task", function(req, res) {
@@ -57,6 +34,32 @@ module.exports = function(app) {
     db.User.create(req.body).then(function(data) {
       console.log(data);
       res.redirect("/login");
+    });
+  });
+
+  app.get("/api/test", function(req, res) {
+    
+  });
+
+  app.put("/api/checkmark", function (req, res) {
+    db.Task.update({ completed: req.body.completed }, { where: { id: req.body.id } }).then(function () {
+
+        db.Task.findAll({ where: { id: message.id } }).then(function (data) {
+            data[0].getList({ include: ["Cheri"] }).then(function (data) {
+                data.Cheri.forEach(function (entry) {
+                    if (entry.currentSocket) {
+                        io.sockets.in(entry.currentSocket).emit("checkupdate", { id: message.id, completed: message.completed });
+                    }
+                    db.User.findAll({ where: { id: data.id } }).then(function (dbUser) {
+                        if (dbUser[0].currentSocket) {
+                            io.sockets.in(dbUser[0].currentSocket).emit("checkupdate", { id: message.id, completed: message.completed });
+                        }
+                        res.status(200).end();
+                    });
+                });
+            });
+        });
+
     });
   });
 };

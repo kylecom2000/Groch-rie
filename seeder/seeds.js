@@ -60,7 +60,7 @@ module.exports = function (models) {
         }
       ])
       
-      .then(function(dbtasks) {
+      .then(function(/*dbtasks*/) {
         lists[0].addCheri(users[2]);
         lists[1].addCheri(users[2]);
       });

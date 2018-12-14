@@ -1,5 +1,6 @@
 {
     "env": {
+        "es6":true,
         "browser": true,
         "commonjs": true,
         "node": true,
@@ -10,6 +11,10 @@
         "prettier"
       ],
     "rules": {
+        "prefer-const": ["error", {
+            "destructuring": "any",
+            "ignoreReadBeforeAssign": false
+        }],
         "no-duplicate-case":"error",
         "no-empty":"error",
         "no-extra-semi":"error",

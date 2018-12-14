@@ -1,7 +1,7 @@
-$('.menu .item')
+$(".menu .item")
   .tab()
 ;
 
-$('.ui.accordion')
+$(".ui.accordion")
   .accordion()
 ;

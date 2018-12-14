@@ -55,6 +55,7 @@ app.get("/user/dash", function (req, res) {
     });
 });
 
+console.log("LAST USER", lastUser);
 // Routes
 require("./routes/apiRoutes")(app, io);
 require("./routes/htmlRoutes")(app);
@@ -91,7 +92,6 @@ db.sequelize.sync({ force: true }).then(function () {
       console.log(data);
       lastUser = null;
     });
-
     socketRoutes(socket, io);
   });
 

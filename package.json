@@ -6,7 +6,7 @@
   "scripts": {
     "start": "node server.js",
     "lint": "eslint **/*.js --quiet",
-    "fix": "eslint --fix .",
+    "fix": "eslint **/*.js --fix ",
     "test": "npm run lint && NODE_ENV=test mocha -u tdd --reporter spec --exit"
   },
   "license": "ISC",

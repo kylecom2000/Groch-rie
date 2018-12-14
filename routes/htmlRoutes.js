@@ -21,14 +21,14 @@ module.exports = function(app) {
     db.User.getviewables({ where: { viewerId: req.user.id } })
       .then(function (data) {
 
-          console.log(data);
-          fullData.viewables = data
+        console.log(data);
+        fullData.viewables = data;
 
         db.User.getusables({ where: { viewerId: req.user.id } })
           .then(function (data) {
 
             console.log(data);
-            fullData.usables = data
+            fullData.usables = data;
 
             res.render("", fullData);
           });

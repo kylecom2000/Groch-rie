@@ -7,7 +7,7 @@ module.exports = function (socket, io) {
         });
     });
 
-
+    console.log("sockets.js variable io:", io);
 
 
 };

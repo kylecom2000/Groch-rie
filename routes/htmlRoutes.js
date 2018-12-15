@@ -18,8 +18,8 @@ module.exports = function(app) {
     db.List.findAll({
       include: ["Task"]
     }).then(function(data) {
-      console.log(data);
-      res.redirect("/dashboard/user", {
+      // console.log(data);
+      res.render("dashboard", {
         lists: data
       });
     });

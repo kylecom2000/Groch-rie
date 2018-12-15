@@ -89,14 +89,19 @@ module.exports = function(app, io) {
   });
 
   app.put("/api/task/checkbox", function (req, res) {
-    db.Task.update({ completed: req.body.completed }, { where: { id: req.body.id } }).then(function (data) {
+    db.Task.update({ completed: req.body.completed }, { where: { id: req.body.id } }).then(function (dbUpdate) {
+      res.json(dbUpdate);
 
-        res.json(data);
+      db.Task.findOne({ where: { id: req.body.id }, include: ["List"] })
+        .then(function (data) {
+
+          // Find the sockets of the people who are relevant to that list and broadcast to them.
+          emitToList(data.list.id, "task-update", dbUpdate);
+
+
+        });
 
     });
   });
 
-  app.get("/api/test", function(req, res) {
-
-  });
 };

@@ -1,6 +1,24 @@
 var db = require("../models");
 
 module.exports = function(app, io) {
+  function emitToList (tableId, eventType, message) {
+    db.List.findOne({ where: { id: tableId }, include: ["Cheri", "Creator"] })
+    .then(function (data) {
+      const targetSockets = [];
+      if (data.Creator.currentSocket) {
+        targetSockets.push(data.Creator.currentSocket);
+      }
+      data.Cheri.forEach(function (entry) {
+        if (entry.currentSocket) {
+          targetSockets.push(entry.currentSocket);
+        }
+      });
+
+      targetSockets.forEach(function (entry) {
+        io.sockets.in(entry).emit(eventType, message);
+      });
+    });
+  }
 
   // Since the user is being created, all the data is coming in the body.
   app.post("/api/user/signup", function(req, res) {
@@ -37,30 +55,28 @@ module.exports = function(app, io) {
       res.json(data);
       
       // Find the sockets of the people who are relevant to that list and broadcast to them.
-      db.List.findOne({where: {id: req.body.listId}, include:["Cheri", "Creator"]})
-        .then(function(data) {
-          const targetSockets = [];
-          if (data.Creator.currentSocket) {
-            targetSockets.push(data.Creator.currentSocket);
-          }
-          data.Cheri.forEach(function(entry) {
-            if (entry.currentSocket) {
-              targetSockets.push(entry.currentSocket);
-            }
-          });
-
-          targetSockets.forEach(function(entry) {
-            io.sockets.in(entry).emit("task-create", newTask);
-          });
-        });
+      emitToList(req.body.listId, "task-create", newTask);
       
     });
   });
 
-  app.delete("/api/task/delete/:id", function(req, res) {
-    db.Task.destroy({where: {id: req.params.id}}).then(function(data) {
-      res.json(data);
-    });
+  app.delete("/api/task/delete/:id", function (req, res) {
+
+    // Find the list before deleting the item 
+    db.Task.findOne({ where: { id: req.params.id }, include: ["List"] })
+      .then(function (data) {
+        const targetListId = data.list.id;
+
+
+        db.Task.destroy({ where: { id: req.params.id } }).then(function (data) {
+          res.json(data);
+
+          // Find the sockets of the people who are relevant to that list and broadcast to them.
+          emitToList(targetListId, "task-delete", req.params.id);
+
+        });
+
+      });
   });
 
   // This route assumes that the desired sharers appear in the req.body as follows: {users: [nickNames]}

@@ -33,7 +33,7 @@ module.exports = function(app) {
   app.post("/api/user/signup", function(req, res) {
     db.User.create(req.body).then(function(data) {
       console.log(data);
-      res.render("login");
+      res.redirect("login");
     });
   });
 
@@ -41,7 +41,7 @@ module.exports = function(app) {
   app.post("/api/user/login", passport.authenticate("local"), function(req, res) {
     console.log("TESTT TTTEST TESTT SET SETESTEST");
     // console.log("REQ.USER", req.user);
-    res.render("dashboard");
+    return res.redirect("/dashboard/user");
   });
 
    // REMOVE WHEN DEPLOYING Test to ensure we are receiving user login data from server after login.

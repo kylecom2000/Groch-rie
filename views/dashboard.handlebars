@@ -7,78 +7,43 @@
 <br><br>
 
 <div class="container">
+
     <div class="ui bottom attached tab segment active" data-tab="first">
-        <h1>Manage</h1>
+        <h1>Manage Lists!</h1>
         <div class="ui styled accordion">
 
-            <div class="title">
-                <i class="dropdown icon"></i>
-                <span>ROOMATES</span>
-                <span class="add-user-button" style="padding-left: 10px"><i class="large user plus icon"></i></span>
-            </div>
+            {{#each lists}}
 
-            <div class="content">
-                <div class="ui middle aligned divided list" style="padding-left:25px">
+                <div class="title">
+                    <i class="dropdown icon"></i>
+                    {{this.title}}
+                    <span class="add-user-button" style="padding-left: 10px"><i class="large user plus icon"></i></span>
+                </div>
 
-                    <div style="padding-top:20px">New Item
-                        <span class="new-item-button" style="float:right" data-id="new-item"><i class="teal large plus square icon"></i></span>
-                    </div><hr>
+                <div class="content">
+                    <div style="padding-top:20px; padding-left:5px" class="ui middle aligned divided list">
 
-                    <div>
-                            <span class="content" style="padding-left: 0px">Placeholder</span>
-                            <span class="delete-item-button" style="float:right" data-id="placeholder"><i class="red large minus square icon"></i></span>
-                            <p style="font-size:12px">Added by: user</p>
-                            <hr>
-                    </div>
+                        <div>Add New Item
+                            <span class="new-item-button" style="float:right" data-id="new-item"><i class="teal large plus square icon"></i></span>
+                        </div><hr>
 
-                    {{#each examples}}
-                        <div>
-                            <li>
+                        {{#each this.Task}}
+                            <div>
                                 <span class="content" style="padding-left: 0px">{{this.text}}</span>
                                 <span class="delete-item-button" style="float:right" data-id={{this.id}}><i class="red large minus square icon"></i></span>
                                 <p style="font-size:12px">Added by: {{this.text}}</p>
-                            </li><hr>
-                        </div>
-                    {{/each}}
-                </div>
-            </div>
+                            </div><hr>
+                        {{/each}}
 
-            <div class="title">
-                <i class="dropdown icon"></i>
-                <span>OFFICE</span>
-                <span class="add-user-button" style="padding-left: 10px"><i class="large user plus icon"></i></span>
-            </div>
-
-            <div class="content">
-                <div class="ui middle aligned divided list" style="padding-left:25px">
-
-                    <div style="padding-top:20px">New Item
-                        <span class="new-item-button" style="float:right"><i class="teal large plus square icon"></i></span>
-                    </div><hr>
-
-                    <div>
-                            <span class="content" style="padding-left: 0px">Placeholder</span>
-                            <span class="delete-item-button" style="float:right" data-id="placeholder"><i class="red large minus square icon"></i></span>
-                            <p style="font-size:12px">Added by: user</p>
-                            <hr>
                     </div>
-
-                    {{#each examples}}
-                        <div>
-                            <li>
-                                <span class="content" style="padding-left: 0px">{{this.text}}</span>
-                                <span class="delete-item-button" style="float:right" data-id={{this.id}}><i class="red large minus square icon"></i></span>
-                                <p style="font-size:12px">Added by: {{this.text}}</p>
-                            </li><hr>
-                        </div>
-                    {{/each}}
                 </div>
-            </div>
 
+            {{/each}}
+        
         </div>
     </div>
 
-    <div class="ui bottom attached tab segment" data-tab="second">
+    <div class="ui bottom attached tab segment" data-tab="second" style="border:sold 1px black">
         <h1> Pick a list! </h1>
         <div class="ui styled accordion">
 
@@ -105,8 +70,10 @@
               </div>
           </div>
           {{/each}}
+
         </div>
     </div>
+
 </div>
 
 {{!-- <div class="ui bottom attached tab segment" data-tab="third">
@@ -114,6 +81,17 @@
 </div> --}}
 
 <script type="text/javascript">
+
+// semantic tabs js
+$('.menu .item')
+    .tab()
+;
+
+// semantic accordion js
+$('.ui.accordion')
+    .accordion()
+;
+
 $('.checkbox').on('click', function(event){
   const taskId = $(this).data("id");
   let isComplete = $(this).data("completed");
@@ -140,12 +118,7 @@ $('.checkbox').on('click', function(event){
     console.log("testing put ajax")
   });
 });
-$('.menu .item')
-    .tab()
-;
-$('.ui.accordion')
-    .accordion()
-;
+
 $(".add-user-button").click(function() {
     alert("Add User");
     console.log($(this).data("class"));
@@ -155,8 +128,9 @@ $(".new-item-button").click(function() {
     console.log($(this).data("id"));
 });
 $(".delete-item-button").click(function() {
-    alert("Delete Item");
-    console.log($(this).data("id"));
+    const taskId = $(this).data("id");
+
+    console.log(taskId);
 });
 
 // var socket = io.connect(window.location);

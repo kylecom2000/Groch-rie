@@ -8,6 +8,8 @@
 
 <div class="container">
 
+    {{!-- MANAGE TAB --}}
+
     <div class="ui bottom attached tab segment active" data-tab="first">
         <h1>Manage Lists!</h1>
         <div class="ui styled accordion">
@@ -23,15 +25,15 @@
                 <div class="content">
                     <div style="padding-top:20px; padding-left:5px" class="ui middle aligned divided list">
 
-                        <div>Add New Item
-                            <span class="new-item-button" style="float:right" data-id="new-item"><i class="teal large plus square icon"></i></span>
+                        <div><input type="text" id="new-item-input" placeholder="Enter a new item..."></input>
+                            <span class="new-item-button" data-id="new-item"><i class="teal large plus square icon" style="float:right"></i></span>
                         </div><hr>
 
                         {{#each this.Task}}
                             <div>
                                 <span class="content" style="padding-left: 0px">{{this.text}}</span>
                                 <span class="delete-item-button" style="float:right" data-id={{this.id}}><i class="red large minus square icon"></i></span>
-                                <p style="font-size:12px">Added by: {{this.text}}</p>
+                                <p style="font-size:12px">Added by: {{this.originatorId}}</p>
                             </div><hr>
                         {{/each}}
 
@@ -42,6 +44,8 @@
         
         </div>
     </div>
+    
+    {{!-- SHOP TAB --}}
 
     <div class="ui bottom attached tab segment" data-tab="second" style="border:sold 1px black">
         <h1> Pick a list! </h1>
@@ -123,14 +127,34 @@ $(".add-user-button").click(function() {
     alert("Add User");
     console.log($(this).data("class"));
 });
-$(".new-item-button").click(function() {
-    alert("Add Item");
-    console.log($(this).data("id"));
-});
-$(".delete-item-button").click(function() {
-    const taskId = $(this).data("id");
 
-    console.log(taskId);
+$(".new-item-button").click(function(event) {
+
+    var createTask = {
+        text: $("#new-item-input").val().trim(),
+        price: 0,
+        listId: 1,
+        originatorId: 1
+    };
+    console.log(createTask);
+
+    $.post("/api/task/create", createTask, function() {
+        console.log(createTask);
+        window.location.href = "/dashboard/user";
+    });
+
+});
+
+$(".delete-item-button").click(function() {
+    event.preventDefault();
+
+    const taskId = $(this).data("id");
+    $.ajax({
+        method: "DELETE",
+        url: "/api/task/delete/" + taskId,
+    }).then(function() {
+        console.log("testing delete ajax")
+    });
 });
 
 // var socket = io.connect(window.location);

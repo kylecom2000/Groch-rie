@@ -55,7 +55,12 @@ module.exports = function(app) {
 
   // For Task
   app.post("/api/task/create", function(req, res) {
-    db.Task.create(req.body).then(function(data) {
+    db.Task.create({
+      text: req.body.text,
+      price: req.body.price,
+      listId: req.body.listId,
+      originatorId: req.body.originatorId
+    }).then(function(data) {
       res.json(data);
     });
   });

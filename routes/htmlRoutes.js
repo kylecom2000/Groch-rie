@@ -27,7 +27,7 @@ module.exports = function(app, io) {
     db.List.findAll({
       include: ["Task", "Cheri", "Creator"]
     }).then(function(data) {
-      res.render("dashboardTest", {
+      res.render("dashboard", {
         lists: data
       });
     });

@@ -1,6 +1,8 @@
 var db = require("../models");
 
 module.exports = function(app, io) {
+
+  // this function sends a message to all of the users authorized for a list.
   function emitToList (tableId, eventType, message) {
     db.List.findOne({ where: { id: tableId }, include: ["Cheri", "Creator"] })
     .then(function (data) {
@@ -35,6 +37,8 @@ module.exports = function(app, io) {
 
   // For list
   app.post("/api/list/create", function(req, res) {
+    newList = req.body;
+    newList.creatorId = req.user ? req.user.id : 1;
     db.List.create(req.body).then(function(data) {
       res.json(data);
     });
@@ -49,7 +53,7 @@ module.exports = function(app, io) {
   // For Task
   app.post("/api/task/create", function(req, res) {
     const newTask = req.body;
-    newTask.creatorId = req.user ? req.user.id : 1;
+    newTask.originatorId = req.user ? req.user.id : 1;
     
     db.Task.create(newTask).then(function(data) {
       res.json(data);
@@ -89,7 +93,8 @@ module.exports = function(app, io) {
   });
 
   app.put("/api/task/checkbox", function (req, res) {
-    db.Task.update({ completed: req.body.completed }, { where: { id: req.body.id } }).then(function (dbUpdate) {
+    const taskCompleter = req.user ? req.user.id : 1;
+    db.Task.update({ completed: req.body.completed, completerId: taskCompleter}, { where: { id: req.body.id } }).then(function (dbUpdate) {
       res.json(dbUpdate);
 
       db.Task.findOne({ where: { id: req.body.id }, include: ["List"] })

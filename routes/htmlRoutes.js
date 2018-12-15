@@ -16,20 +16,35 @@ module.exports = function(app, io) {
 
   app.get("/dashboard/user", function(req, res) {
 
-    let lastUser = req.user ? req.user.id : 1;
+    const thisUser = req.user ? req.user.id : 1;
     io.on("connection", function (socket) {
       db.User.update({currentSocket: socket.id}, {where: {id: lastUser}}).then(() => {
-        lastUser = null;
       });
     });
 
+    const relTables = [];
+    // This code block identifies the user, retrieves tables relevant to them, marked shared tables as editable or not depending on their category, and then sends the result to the renderer.
+    db.User.findOne({where: { id: thisUser}}).then(function(dbUser) {
 
-    db.List.findAll({
-      include: ["Task", "Cheri", "Creator"]
-    }).then(function(data) {
-      res.render("dashboard", {
-        lists: data
+      dbUser.getWishlist({include: ["Task", "Cheri", "Creator"]}).then(function (dbLists) {
+        dbLists.forEach(function (entry) {
+          entry.editable = true;
+          relTables.push(entry);
+
+          db.User.getShared({include: ["Task", "Cheri", "Creator"]}).then(function(dbLists) {
+            
+            dbLists.forEach(function(entry) {
+              entry.editable = entry.category === "Shared" ? true : false;
+              relTables.push(entry);
+            });
+
+            res.render("dashboard", {
+              lists: data
+            });
+          });
+        });
       });
+      
     });
   });
 

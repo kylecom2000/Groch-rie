@@ -1,6 +1,6 @@
 var db = require("../models");
 
-module.exports = function(app) {
+module.exports = function(app, io) {
   // Load index page
   app.get("/", function(req, res) {
     res.render("landing");
@@ -15,11 +15,19 @@ module.exports = function(app) {
   });
 
   app.get("/dashboard/user", function(req, res) {
+
+    let lastUser = req.user ? req.user.id : 1;
+    io.on("connection", function (socket) {
+      db.User.update({currentSocket: socket.id}, {where: {id: lastUser}}).then(() => {
+        lastUser = null;
+      });
+    });
+
+
     db.List.findAll({
-      include: ["Task"]
+      include: ["Task", "Cheri", "Creator"]
     }).then(function(data) {
-      console.log(data);
-      res.render("dashboard", {
+      res.render("dashboardTest", {
         lists: data
       });
     });

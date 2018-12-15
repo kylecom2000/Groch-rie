@@ -1,16 +1,35 @@
 var db = require("../models");
 
-module.exports = function(app) {
+module.exports = function(app, io) {
   // This route assumes that the user is known and given as req.user.id (may need to come from passport).
   // It further expects the front end has formatted the request in json with fields for the text of the task, price, and the list it belongs to.
   app.post("/api/task", function(req, res) {
-    db.Task.create({
+    const newTask = {
       text: req.body.text,
       price: req.body.price,
-      originatorId: req.user.id,
+      originatorId: req.body.originatorId,
       listId: req.body.list
-    }).then(function(data) {
+    }; 
+    db.Task.create(newTask).then(function(data) {
       res.json(data);
+
+      db.List.findOne({where: {id: req.body.list}, include:["Cheri", "Creator"]})
+        .then(function(data) {
+          const targetSockets = [];
+          if (data.Creator.currentSocket) {
+            targetSockets.push(data.Creator.currentSocket);
+          }
+          data.Cheri.forEach(function(entry) {
+            if (entry.currentSocket) {
+              targetSockets.push(entry.currentSocket);
+            }
+          });
+
+          targetSockets.forEach(function(entry) {
+            io.sockets.in(entry).emit("task-create", newTask);
+          });
+        });
+      
     });
   });
 

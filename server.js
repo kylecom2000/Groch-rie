@@ -4,6 +4,7 @@ var exphbs = require("express-handlebars");
 const passport = require("./config/passport");
 const session = require("express-session");
 const path = require("path");
+const socket = require("socket.io");
 
 const db = require("./models");
 
@@ -28,9 +29,7 @@ app.engine(
 );
 app.set("view engine", "handlebars");
 
-// Routes
-require("./routes/apiRoutes")(app);
-require("./routes/htmlRoutes")(app);
+
 
 
 
@@ -45,7 +44,7 @@ if (process.env.NODE_ENV === "test") {
 // Starting the server, syncing our models ------------------------------------/
 db.sequelize.sync({ force: true }).then(function () {
   require(path.join(__dirname, "./seeder/seeds.js"))(db);
-  app.listen(PORT, function () {
+  const server = app.listen(PORT, function () {
     console.log(
       "==> 🌎  Listening on port %s. Visit http://localhost:%s/ in your browser.",
       PORT,
@@ -53,6 +52,11 @@ db.sequelize.sync({ force: true }).then(function () {
     );
   });
 
+  // Socket setup
+  const io = socket(server);
+  // Routes
+  require("./routes/apiRoutes")(app, io);
+  require("./routes/htmlRoutes")(app, io);
 });
 
 module.exports = app;

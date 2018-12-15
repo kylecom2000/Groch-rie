@@ -159,6 +159,17 @@ $(".delete-item-button").click(function() {
     console.log($(this).data("id"));
 });
 
-// var socket = io.connect(window.location);
+var socket = io({transports: ['websocket'], upgrade: false});
+socket.on("task-create", function(message) {
+    console.log(message);
+})
+
+socket.on("task-update", function(message) {
+    console.log(message);
+})
+
+socket.on("task-delete", function(message) {
+    console.log(message);
+})
 
 </script>

@@ -19,7 +19,7 @@ module.exports = function(app) {
       include: ["Task"]
     }).then(function(data) {
       console.log(data);
-      res.render("dashboard", {
+      res.redirect("/dashboard/user", {
         lists: data
       });
     });

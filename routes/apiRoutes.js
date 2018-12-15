@@ -15,15 +15,6 @@ module.exports = function(app) {
     });
   });
 
-  // Test to ensure we are receiving user data from server after login.
-  app.get("/api/userinfo", function(req, res){
-    if(!req.user){
-      res.json({message: "No user"});
-    } else {
-      res.json(req.user);
-    }
-  });
-
   // This route assumes that the user is known and given as req.user.id (may need to come from passport).
   // It further expects that the front end has formatted te request in json with fields for the title and category.
   // Should it allow you to have shared it already?
@@ -42,15 +33,24 @@ module.exports = function(app) {
   app.post("/api/user/signup", function(req, res) {
     db.User.create(req.body).then(function(data) {
       console.log(data);
-      res.redirect("/login");
+      res.render("login");
     });
   });
 
   // User logins
   app.post("/api/user/login", passport.authenticate("local"), function(req, res) {
     console.log("TESTT TTTEST TESTT SET SETESTEST");
-    console.log(req.user);
-    res.redirect("/dashboard/user");
+    // console.log("REQ.USER", req.user);
+    res.render("dashboard");
+  });
+
+   // REMOVE WHEN DEPLOYING Test to ensure we are receiving user login data from server after login.
+   app.get("/api/userinfo", function(req, res){
+    if(!req.user){
+      res.json({message: "No user"});
+    } else {
+      res.json(req.user);
+    }
   });
 
   // For list

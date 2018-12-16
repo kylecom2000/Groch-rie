@@ -105,6 +105,13 @@ module.exports = function(app) {
     });
   });
 
+  // Sets all of the checks for particular list to uncompleted
+  app.put("/api/list/reuse/", function(req, res) {
+    db.Task.update({ completed: 0 }, { where: { listId: req.body.id } }).then(function(data) {
+      res.json(data);
+    });
+  });
+
   app.get("/api/test", function(req, res) {
     console.log("api/test get route req:", req);
     res.end();

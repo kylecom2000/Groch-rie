@@ -57,11 +57,12 @@
 
     {{!-- SHOP TAB --}}
 
-    <div class="ui bottom attached tab segment" data-tab="second">
+    <div class="ui bottom tab segment" data-tab="second">
         <h1> Go Shopping </h1>
         <div class="ui styled accordion">
 
           {{#each lists}}
+          <div class="list">
           <div class="title">
               <i class="dropdown icon"></i>
               {{this.title}}
@@ -97,7 +98,9 @@
                     {{/if}}
                   {{/each}}
               </div>
+              <div class="ui fluid large teal submit button reuse-list-btn" data-id={{this.id}}>Reuse</div>
           </div>
+        </div>
           {{/each}}
 
         </div>
@@ -110,9 +113,6 @@
 </div> --}}
 
 <script type="text/javascript">
-$(document).ready(function() {
-  console.log($('.checkbox').data('checked'));
-})
 // semantic tabs js
 $('.menu .item')
     .tab()
@@ -123,6 +123,7 @@ $('.ui.accordion')
     .accordion()
 ;
 
+// On checkbox click
 $('.checkbox').on('click', function(event){
   const taskId = $(this).data("id");
   let isComplete = $(this).data("completed");
@@ -134,7 +135,7 @@ $('.checkbox').on('click', function(event){
   } else {
     isComplete = false;
     $(this).attr("data-completed", false)
-  }
+  };
 
   let updateTask = {
     id: taskId,
@@ -145,9 +146,26 @@ $('.checkbox').on('click', function(event){
     method: "PUT",
     url: "/api/task/checkbox",
     data: updateTask
-  }).then(function() {
-    console.log("testing put ajax")
-  });
+  })
+});
+
+// click event for reusing an existin list and changes values to uncompleted
+$(".reuse-list-btn").click(function() {
+    event.preventDefault();
+
+    const listId = $(this).data("id");
+
+    let reuseList = {
+      id: listId
+    };
+
+    $.ajax({
+        method: "PUT",
+        url: "/api/list/reuse/",
+        data: reuseList
+    }).then(function() {
+        window.location.href = "/dashboard/user";
+    });
 });
 
 // click event for adding a new user to an existing list

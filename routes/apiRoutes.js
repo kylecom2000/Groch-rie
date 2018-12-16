@@ -55,20 +55,29 @@ module.exports = function(app) {
 
   // For list
   app.post("/api/list/create", function(req, res) {
-    db.List.create(req.body).then(function(data) {
+    db.List.create({
+      title: req.body.title,
+      category: req.body.category,
+      creatorId: req.body.creatorId
+    }).then(function(data) {
       res.json(data);
     });
   });
 
   app.delete("/api/list/delete/:id", function(req, res) {
-    db.Task.destroy({where: {id: req.params.id}}).then(function(data) {
+    db.List.destroy({where: {id: req.params.id}}).then(function(data) {
       res.json(data);
     });
   });
 
   // For Task
   app.post("/api/task/create", function(req, res) {
-    db.Task.create(req.body).then(function(data) {
+    db.Task.create({
+      text: req.body.text,
+      price: req.body.price,
+      listId: req.body.listId,
+      originatorId: req.body.originatorId
+    }).then(function(data) {
       res.json(data);
     });
   });

@@ -51,10 +51,10 @@
                 </div>
 
             {{/each}}
-        
+
         </div>
     </div>
-    
+
     {{!-- SHOP TAB --}}
 
     <div class="ui bottom attached tab segment" data-tab="second">
@@ -68,18 +68,33 @@
           </div>
           <div class="content">
               <div style="padding-top:20px" class="ui middle aligned divided list">
+                <!-- Prints out list item for each task -->
                   {{#each this.Task}}
-                  <div class="item">
-                  <div class="right floated content">
-                      <div class="ui checkbox" data-completed={{this.completed}} data-id={{this.id}}>
-                      <input type="checkbox" name="example">
-                      <label></label>
+                    {{#if this.completed}}
+                      <div class="item">
+                      <div class="right floated content">
+                          <div class="ui checkbox" data-completed={{this.completed}} data-id={{this.id}}>
+                          <input checked type="checkbox" name="example">
+                          <label></label>
+                          </div>
                       </div>
-                  </div>
-                  <div class="content">
-                      {{text}}
-                  </div>
-                  </div>
+                      <div class="content">
+                          {{text}}
+                      </div>
+                      </div>
+                    {{else}}
+                      <div class="item">
+                      <div class="right floated content">
+                          <div class="ui checkbox" data-completed={{this.completed}} data-id={{this.id}}>
+                          <input type="checkbox" name="example">
+                          <label></label>
+                          </div>
+                      </div>
+                      <div class="content">
+                          {{text}}
+                      </div>
+                      </div>
+                    {{/if}}
                   {{/each}}
               </div>
           </div>
@@ -95,7 +110,9 @@
 </div> --}}
 
 <script type="text/javascript">
-
+$(document).ready(function() {
+  console.log($('.checkbox').data('checked'));
+})
 // semantic tabs js
 $('.menu .item')
     .tab()

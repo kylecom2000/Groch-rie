@@ -1,7 +1,32 @@
-/* Login Page */
 body {
-  background-color: #DADADA;
+  background: linear-gradient(white);
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-size: cover;
 }
+
+/* Landing Page */
+
+#landing-body {
+  text-align:center;
+}
+
+#landing-title {
+  margin-top:65px;
+  margin-bottom:25px;
+  width:80%;
+  max-width:400px;
+}
+
+#landing-logo {
+  width:80%;
+  padding:0px 20px 0px 20px;
+  max-width:200px;
+  margin-bottom:25px;
+}
+
+/* Login Page */
+
 body > .grid {
   height: 100%;
 }
@@ -10,4 +35,66 @@ body > .grid {
 }
 .column {
   max-width: 450px;
+}
+.ui.stacked.segment {
+  margin:0px 20px 0px 20px;
+}
+
+/* Dashboard Page */
+
+h1 {
+  text-align:center;
+  color: white;
+  text-shadow: 1px 1px 1px grey;
+}
+
+#new-list-input {
+  width: 75%;
+  padding:8px;
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
+
+#new-item-input {
+  width: 75%;
+  padding:8px;
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
+
+div.title {
+  padding:0px;
+}
+
+.large.file.icon {
+  padding-top:13px;
+  float:right;
+}
+
+.teal.large.plus.square.icon {
+  padding-top:13px;
+  float:right;
+}
+
+hr {
+  opacity:.4;
+}
+
+/* active accordions */
+.ui.tab.active, .ui.tab.open {
+  border-top: 1px solid #d4d4d5;
+  border-radius:10px;
+  background:#00B9B0;
+  box-shadow: 2px 2px 2px grey;
+  max-width: 1000px;
+  margin:auto;
+}
+
+/* shop accordions */
+.ui.attached:not(.message)+.ui.attached.segment:not(.top) {
+  border-top: 1px solid #d4d4d5;
+}
+
+.ui.styled.accordion {
+  margin:auto;
 }

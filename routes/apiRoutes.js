@@ -51,7 +51,7 @@ module.exports = function(app, io) {
     newList = req.body;
     newList.creatorId = req.user ? req.user.id : 1;
     db.List.create(req.body).then(function(data) {
-
+      console.log(data);
       res.json(data);
     });
   });
@@ -70,6 +70,7 @@ module.exports = function(app, io) {
     db.Task.create(newTask).then(function(data) {
       res.json(data);
       
+      newTask.nickName = req.user ? req.user.nickName : "bob";
       // Find the sockets of the people who are relevant to that list and broadcast to them.
       emitToList(req.body.listId, "task-create", newTask);
       
@@ -105,16 +106,18 @@ module.exports = function(app, io) {
   });
 
   app.put("/api/task/checkbox", function (req, res) {
-
     const taskCompleter = req.user ? req.user.id : 1;
     db.Task.update({ completed: req.body.completed, completerId: taskCompleter}, { where: { id: req.body.id } }).then(function (dbUpdate) {
+      console.log(dbUpdate);
       res.json(dbUpdate);
 
       db.Task.findOne({ where: { id: req.body.id }, include: ["List"] })
         .then(function (data) {
 
+          const message = {id: req.body.id};
+          message.completerNick = req.user ? req.user.nickName : "bob";
           // Find the sockets of the people who are relevant to that list and broadcast to them.
-          emitToList(data.list.id, "task-update", dbUpdate);
+          emitToList(data.List.id, "task-update", message);
 
 
         });

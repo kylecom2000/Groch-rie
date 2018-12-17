@@ -46,7 +46,7 @@ $(document).ready(function() {
           url: "/api/list/reuse/",
           data: reuseList
       }).then(function() {
-          window.location.href = "/dashboard/user";
+        //   window.location.href = "/dashboard/user";
       });
   });
 
@@ -66,9 +66,9 @@ $(document).ready(function() {
       };
       console.log(createList);
 
-      $.post("/api/list/create", createList, function() {
-          console.log(createList);
-          window.location.href = "/dashboard/user";
+      $.post("/api/list/create", createList, function(data) {
+          console.log(data);
+        //   window.location.href = "/dashboard/user";
       });
   });
 
@@ -83,7 +83,7 @@ $(document).ready(function() {
       };
 
       $.post("/api/task/create", createTask, function() {
-          window.location.href = "/dashboard/user";
+        //   window.location.href = "/dashboard/user";
       });
 
   });
@@ -98,7 +98,7 @@ $(document).ready(function() {
           url: "/api/list/delete/" + listId,
       }).then(function() {
           console.log("testing delete ajax");
-          window.location.href = "/dashboard/user";
+        //   window.location.href = "/dashboard/user";
       });
   });
 
@@ -112,7 +112,7 @@ $(document).ready(function() {
           url: "/api/task/delete/" + taskId,
       }).then(function() {
           console.log("testing delete ajax");
-          window.location.href = "/dashboard/user";
+        //   window.location.href = "/dashboard/user";
       });
   });
   

@@ -26,7 +26,7 @@ module.exports = function(app, io) {
     });
     const relTables = [];
     // This code block identifies the user, retrieves tables relevant to them, marked shared tables as editable or not depending on their category, and then sends the result to the renderer.
-    db.User.findOne({where: { id: thisUser}}).then(function(dbUser) {
+    db.User.findOne({where: { id: thisUser}}).then(function(dbUser) {debugger;
 
       dbUser.getWishlist({include: ["Task", "Cheri", "Creator"]}).then(function (dbLists) {
         dbLists.forEach(function (entry) {

@@ -25,8 +25,7 @@ module.exports = function(app, io) {
 
   // Since the user is being created, all the data is coming in the body.
   app.post("/api/user/signup", function(req, res) {
-    db.User.create(req.body).then(function(data) {
-      console.log(data);
+    db.User.create(req.body).then(function() {
       res.json("/login");
     });
   });
@@ -51,9 +50,10 @@ module.exports = function(app, io) {
     newList = req.body;
     newList.creatorId = req.user ? req.user.id : 1;
     db.List.create(req.body).then(function(data) {
-      console.log(data);
       res.json(data);
     });
+
+    
   });
 
   app.delete("/api/list/delete/:id", function(req, res) {

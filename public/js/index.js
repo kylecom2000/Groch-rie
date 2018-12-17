@@ -1,102 +1,120 @@
-// // Get references to page elements
-// var $exampleText = $("#example-text");
-// var $exampleDescription = $("#example-description");
-// var $submitBtn = $("#submit");
-// var $exampleList = $("#example-list");
-//
-// // The API object contains methods for each kind of request we'll make
-// var API = {
-//   saveExample: function(example) {
-//     return $.ajax({
-//       headers: {
-//         "Content-Type": "application/json"
-//       },
-//       type: "POST",
-//       url: "api/examples",
-//       data: JSON.stringify(example)
-//     });
-//   },
-//   getExamples: function() {
-//     return $.ajax({
-//       url: "api/examples",
-//       type: "GET"
-//     });
-//   },
-//   deleteExample: function(id) {
-//     return $.ajax({
-//       url: "api/examples/" + id,
-//       type: "DELETE"
-//     });
-//   }
-// };
-//
-// // refreshExamples gets new examples from the db and repopulates the list
-// var refreshExamples = function() {
-//   API.getExamples().then(function(data) {
-//     var $examples = data.map(function(example) {
-//       var $a = $("<a>")
-//         .text(example.text)
-//         .attr("href", "/example/" + example.id);
-//
-//       var $li = $("<li>")
-//         .attr({
-//           class: "list-group-item",
-//           "data-id": example.id
-//         })
-//         .append($a);
-//
-//       var $button = $("<button>")
-//         .addClass("btn btn-danger float-right delete")
-//         .text("ｘ");
-//
-//       $li.append($button);
-//
-//       return $li;
-//     });
-//
-//     $exampleList.empty();
-//     $exampleList.append($examples);
-//   });
-// };
-//
-// // handleFormSubmit is called whenever we submit a new example
-// // Save the new example to the db and refresh the list
-// var handleFormSubmit = function(event) {
-//   event.preventDefault();
-//
-//   var example = {
-//     text: $exampleText.val().trim(),
-//     description: $exampleDescription.val().trim()
-//   };
-//
-//   if (!(example.text && example.description)) {
-//     alert("You must enter an example text and description!");
-//     return;
-//   }
-//
-//   API.saveExample(example).then(function() {
-//     refreshExamples();
-//   });
-//
-//   $exampleText.val("");
-//   $exampleDescription.val("");
-// };
-//
-// // handleDeleteBtnClick is called when an example's delete button is clicked
-// // Remove the example from the db and refresh the list
-// var handleDeleteBtnClick = function() {
-//   var idToDelete = $(this)
-//     .parent()
-//     .attr("data-id");
-//
-//   API.deleteExample(idToDelete).then(function() {
-//     refreshExamples();
-//   });
-// };
-//
-// // Add event listeners to the submit and delete buttons
-// $submitBtn.on("click", handleFormSubmit);
-// $exampleList.on("click", ".delete", handleDeleteBtnClick);
-// $('.ui.dropdown')
-//   .dropdown()
-// ;
+$(document).ready(function() {
+  // Semantic events
+  $(".menu .item").tab();
+  $(".ui.accordion").accordion();
+
+  // On checkbox click
+  $(".checkbox").on("click", function(){
+    const taskId = $(this).data("id");
+    let isComplete = $(this).data("completed");
+
+    // If task is not complete, set to true, else set as false
+    if (!isComplete) {
+      isComplete = true;
+      $(this).attr("data-completed", true);
+    } else {
+      isComplete = false;
+      $(this).attr("data-completed", false);
+    }
+
+    const updateTask = {
+      id: taskId,
+      completed: isComplete
+    };
+
+    $.ajax({
+      method: "PUT",
+      url: "/api/task/checkbox",
+      data: updateTask
+    });
+  });
+
+
+  // click event for reusing an existin list
+  // and changes values to uncompleted
+  $(".reuse-list-btn").click(function() {
+      event.preventDefault();
+
+      const listId = $(this).data("id");
+
+      const reuseList = {
+        id: listId
+      };
+
+      $.ajax({
+          method: "PUT",
+          url: "/api/list/reuse/",
+          data: reuseList
+      }).then(function() {
+          window.location.href = "/dashboard/user";
+      });
+  });
+
+
+  // click event for adding a new user to an existing list
+  $(".add-user-button").click(function() {
+      alert("Add User");
+      console.log($(this).data("class"));
+  });
+
+  // click event for creating a new list
+  $(".new-list-button").click(function() {
+      var createList = {
+          title: $("#new-list-input").val().trim(),
+          category: "Shared",
+          creatorId: 1
+      };
+      console.log(createList);
+
+      $.post("/api/list/create", createList, function() {
+          console.log(createList);
+          window.location.href = "/dashboard/user";
+      });
+  });
+
+  // click event for creating a new task
+  $(".new-item-button").click(function() {
+
+      var createTask = {
+          text: $("#new-item-input").val().trim(),
+          price: 0,
+          listId: 1,
+          originatorId: 1
+      };
+
+      $.post("/api/task/create", createTask, function() {
+          window.location.href = "/dashboard/user";
+      });
+
+  });
+
+  // click event for deleting an existing list
+  $(".delete-list-button").click(function() {
+      event.preventDefault();
+
+      const listId = $(this).data("id");
+      $.ajax({
+          method: "DELETE",
+          url: "/api/list/delete/" + listId,
+      }).then(function() {
+          console.log("testing delete ajax");
+          window.location.href = "/dashboard/user";
+      });
+  });
+
+  // click event for deleting an existing task
+  $(".delete-item-button").click(function() {
+      event.preventDefault();
+
+      const taskId = $(this).data("id");
+      $.ajax({
+          method: "DELETE",
+          url: "/api/task/delete/" + taskId,
+      }).then(function() {
+          console.log("testing delete ajax");
+          window.location.href = "/dashboard/user";
+      });
+  });
+  
+  // var socket = io.connect(window.location);
+});

@@ -1,4 +1,5 @@
 var db = require("../models");
+const passport = require("passport");
 
 module.exports = function(app, io) {
 
@@ -26,13 +27,24 @@ module.exports = function(app, io) {
   app.post("/api/user/signup", function(req, res) {
     db.User.create(req.body).then(function(data) {
       console.log(data);
-      res.redirect("/login");
+      res.redirect("login");
     });
   });
 
   // User logins
-  app.post("/api/user/login", function(req, res) {
+  app.post("/api/user/login", passport.authenticate("local"), function(req, res) {
+    console.log("TESTT TTTEST TESTT SET SETESTEST");
+    // console.log("REQ.USER", req.user);
+    return res.redirect("/dashboard/user");
+  });
 
+   // REMOVE WHEN DEPLOYING Test to ensure we are receiving user login data from server after login.
+   app.get("/api/userinfo", function(req, res){
+    if(!req.user){
+      res.json({message: "No user"});
+    } else {
+      res.json(req.user);
+    }
   });
 
   // For list
@@ -40,12 +52,13 @@ module.exports = function(app, io) {
     newList = req.body;
     newList.creatorId = req.user ? req.user.id : 1;
     db.List.create(req.body).then(function(data) {
+
       res.json(data);
     });
   });
 
   app.delete("/api/list/delete/:id", function(req, res) {
-    db.Task.destroy({where: {id: req.params.id}}).then(function(data) {
+    db.List.destroy({where: {id: req.params.id}}).then(function(data) {
       res.json(data);
     });
   });
@@ -93,6 +106,7 @@ module.exports = function(app, io) {
   });
 
   app.put("/api/task/checkbox", function (req, res) {
+
     const taskCompleter = req.user ? req.user.id : 1;
     db.Task.update({ completed: req.body.completed, completerId: taskCompleter}, { where: { id: req.body.id } }).then(function (dbUpdate) {
       res.json(dbUpdate);
@@ -107,6 +121,17 @@ module.exports = function(app, io) {
         });
 
     });
+
+  // Sets all of the checks for particular list to uncompleted
+  app.put("/api/list/reuse/", function(req, res) {
+    db.Task.update({ completed: 0 }, { where: { listId: req.body.id } }).then(function(data) {
+      res.json(data);
+    });
+  });
+
+  app.get("/api/test", function(req, res) {
+    console.log("api/test get route req:", req);
+    res.end();
   });
 
 };

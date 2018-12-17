@@ -1,110 +1,42 @@
-<div class="ui top attached tabular menu">
-    <a class="item active" data-tab="first">Manage</a>
-    <a class="item" data-tab="second">Shop</a>
-    {{!-- <a class="item" data-tab="third">Wallet</a> --}}
-</div>
+<div id="dash-body">
+    <div class="ui top attached tabular menu">
+        <a class="item active" data-tab="first">Manage</a>
+        <a class="item" data-tab="second">Shop</a>
+        {{!-- <a class="item" data-tab="third">Wallet</a> --}}
+    </div>
+    <br><br>
+    <div class="container">
 
-<br><br>
+        {{!-- MANAGE TAB --}}
+        <div class="ui bottom attached tab segment active" data-tab="first">
+            <h1>Manage Lists</h1>
 
-<div class="container">
-    <div class="ui bottom attached tab segment active" data-tab="first">
-        <h1>Manage</h1>
-        <div class="ui styled accordion">
-
-            <div class="title">
-                <i class="dropdown icon"></i>
-                <span>ROOMATES</span>
-                <span class="add-user-button" style="padding-left: 10px"><i class="large user plus icon"></i></span>
-            </div>
-
-            <div class="content">
-                <div class="ui middle aligned divided list" style="padding-left:25px">
-
-                    <div style="padding-top:20px">New Item
-                        <span class="new-item-button" style="float:right" data-id="new-item"><i class="teal large plus square icon"></i></span>
-                    </div><hr>
-
-                    <div>
-                            <span class="content" style="padding-left: 0px">Placeholder</span>
-                            <span class="delete-item-button" style="float:right" data-id="placeholder"><i class="red large minus square icon"></i></span>
-                            <p style="font-size:12px">Added by: user</p>
-                            <hr>
-                    </div>
-
-                    {{#each examples}}
-                        <div>
-                            <li>
-                                <span class="content" style="padding-left: 0px">{{this.text}}</span>
-                                <span class="delete-item-button" style="float:right" data-id={{this.id}}><i class="red large minus square icon"></i></span>
-                                <p style="font-size:12px">Added by: {{this.text}}</p>
-                            </li><hr>
-                        </div>
-                    {{/each}}
+            <div class="ui styled accordion">
+                <div class="title">
+                    <span class="ui form" ><input type="text" id="new-list-input" placeholder="Add new list..."></input>
+                        <span class="new-list-button" data-id="new-list"><i class="large file icon"></i></i></span>
+                    </span>
                 </div>
             </div>
 
-            <div class="title">
-                <i class="dropdown icon"></i>
-                <span>OFFICE</span>
-                <span class="add-user-button" style="padding-left: 10px"><i class="large user plus icon"></i></span>
-            </div>
-
-            <div class="content">
-                <div class="ui middle aligned divided list" style="padding-left:25px">
-
-                    <div style="padding-top:20px">New Item
-                        <span class="new-item-button" style="float:right"><i class="teal large plus square icon"></i></span>
-                    </div><hr>
-
-                    <div>
-                            <span class="content" style="padding-left: 0px">Placeholder</span>
-                            <span class="delete-item-button" style="float:right" data-id="placeholder"><i class="red large minus square icon"></i></span>
-                            <p style="font-size:12px">Added by: user</p>
-                            <hr>
-                    </div>
-
-                    {{#each examples}}
-                        <div>
-                            <li>
-                                <span class="content" style="padding-left: 0px">{{this.text}}</span>
-                                <span class="delete-item-button" style="float:right" data-id={{this.id}}><i class="red large minus square icon"></i></span>
-                                <p style="font-size:12px">Added by: {{this.text}}</p>
-                            </li><hr>
-                        </div>
-                    {{/each}}
-                </div>
+            <div class="ui styled accordion">
+              {{> lists/list-block }}
             </div>
 
         </div>
+
+    {{!-- SHOP TAB --}}
+    <div class="ui bottom tab segment" data-tab="second">
+        <h1> Go Shopping </h1>
+        <div class="ui styled accordion">
+        {{> lists/task-block }}
     </div>
 
-    <div class="ui bottom attached tab segment" data-tab="second">
-        <h1> Pick a list! </h1>
-        <div class="ui styled accordion">
-
-          {{#each lists}}
-          <div class="title">
-              <i class="dropdown icon"></i>
-              {{this.title}}
-          </div>
-          <div class="content">
-              <div style="padding-top:20px" class="ui middle aligned divided list">
-                  {{#each this.Task}}
-                  <div class="item">
-                  <div class="right floated content">
-                      <div class="ui checkbox" data-completed={{this.completed}} data-id={{this.id}}>
-                      <input type="checkbox" name="example">
-                      <label></label>
-                      </div>
-                  </div>
-                  <div class="content">
-                      {{text}}
-                  </div>
-                  </div>
-                  {{/each}}
-              </div>
-          </div>
-          {{/each}}
+    <div style="margin-top:20px;text-align:center">
+        <div class="ui buttons">
+            <button class="ui negative button">Cancel</button>
+            <div class="or"></div>
+            <button class="ui button">Checkout</button>
         </div>
     </div>
 </div>
@@ -113,51 +45,7 @@
     Wallet
 </div> --}}
 
-<script type="text/javascript">
-$('.checkbox').on('click', function(event){
-  const taskId = $(this).data("id");
-  let isComplete = $(this).data("completed");
-
-  // If task is not complete, set to true, else set as false
-  if (!isComplete) {
-    isComplete = true;
-    $(this).attr("data-completed", true)
-  } else {
-    isComplete = false;
-    $(this).attr("data-completed", false)
-  }
-
-  let updateTask = {
-    id: taskId,
-    completed: isComplete
-  };
-
-  $.ajax({
-    method: "PUT",
-    url: "/api/task/checkbox",
-    data: updateTask
-  }).then(function() {
-    console.log("testing put ajax")
-  });
-});
-$('.menu .item')
-    .tab()
-;
-$('.ui.accordion')
-    .accordion()
-;
-$(".add-user-button").click(function() {
-    alert("Add User");
-    console.log($(this).data("class"));
-});
-$(".new-item-button").click(function() {
-    alert("Add Item");
-    console.log($(this).data("id"));
-});
-$(".delete-item-button").click(function() {
-    alert("Delete Item");
-    console.log($(this).data("id"));
-});
+<script>
 
 var socket = io({transports: ['websocket'], upgrade: false});
 socket.on("task-create", function(message) {

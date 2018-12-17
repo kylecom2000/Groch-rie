@@ -3,7 +3,7 @@ var db = require("../models");
 module.exports = function(app, io) {
   // Load index page
   app.get("/", function(req, res) {
-    res.render("landing");
+    res.render("index");
   });
 
   app.get("/login", function(req, res) {
@@ -15,6 +15,7 @@ module.exports = function(app, io) {
   });
 
   app.get("/dashboard/user", function(req, res) {
+
 
     const thisUser = req.user ? req.user.id : 1;
     io.on("connection", function (socket) {

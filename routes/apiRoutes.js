@@ -99,9 +99,14 @@ module.exports = function(app) {
 
   app.put("/api/task/checkbox", function (req, res) {
     db.Task.update({ completed: req.body.completed }, { where: { id: req.body.id } }).then(function (data) {
-
         res.json(data);
+    });
+  });
 
+  // Sets all of the checks for particular list to uncompleted
+  app.put("/api/list/reuse/", function(req, res) {
+    db.Task.update({ completed: 0 }, { where: { listId: req.body.id } }).then(function(data) {
+      res.json(data);
     });
   });
 

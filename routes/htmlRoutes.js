@@ -24,6 +24,13 @@ module.exports = function(app, io) {
         {currentSocket: socket.id}, 
         {where: {id: thisUser}}
       );
+
+      socket.on("disconnect", function(){
+        db.User.update(
+          {currentSocket: null},
+          {where: {currentSocket: socket.id}}
+        );
+      });
     });
     const relTables = [];
     // This code block identifies the user, retrieves tables relevant to them, marked shared tables as editable or not depending on their category, and then sends the result to the renderer.
@@ -31,6 +38,7 @@ module.exports = function(app, io) {
 
       dbUser.getWishlist({ include: ["Task", "Cheri", "Creator"] }).then(function (dbLists) {
         dbLists.forEach(function (entry) {
+          delete entry.dataValues.Creator.dataValues.password;
           entry.editable = true;
           relTables.push(entry);
         });
@@ -38,10 +46,10 @@ module.exports = function(app, io) {
         dbUser.getShared({ include: ["Task", "Cheri", "Creator"] }).then(function (dbLists) {
 
           dbLists.forEach(function (entry) {
+            delete entry.dataValues.Creator.dataValues.password;
             entry.editable = entry.category === "Shared" ? true : false;
             relTables.push(entry);
           });
-          // res.json(relTables);
           res.render("dashboard", {
             lists: relTables
           });

@@ -118,7 +118,7 @@ module.exports = function(app, io) {
           const message = {id: req.body.id};
           message.completerNick = req.user ? req.user.nickName : "bob";
           // Find the sockets of the people who are relevant to that list and broadcast to them.
-          emitToList(data.List.id, "task-update", req.body.id);
+          emitToList(data.List.id, "task-update", message);
 
 
         });

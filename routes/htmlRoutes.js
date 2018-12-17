@@ -1,4 +1,5 @@
 var db = require("../models");
+const isAuthenticated = require("../config/middleware/isAuthenticated");
 
 module.exports = function(app, io) {
   // Load index page
@@ -15,7 +16,7 @@ module.exports = function(app, io) {
   });
 
 
-  app.get("/dashboard/user", function (req, res) {
+  app.get("/dashboard/user", isAuthenticated, function (req, res) {
 
     const thisUser = req.user ? req.user.id : 1;
     io.on("connection", function (socket) {

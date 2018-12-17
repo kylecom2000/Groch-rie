@@ -27,19 +27,18 @@ module.exports = function(app, io) {
   app.post("/api/user/signup", function(req, res) {
     db.User.create(req.body).then(function(data) {
       console.log(data);
-      res.redirect("login");
+      res.json("/login");
     });
   });
 
   // User logins
   app.post("/api/user/login", passport.authenticate("local"), function(req, res) {
-    console.log("TESTT TTTEST TESTT SET SETESTEST");
-    // console.log("REQ.USER", req.user);
-    return res.redirect("/dashboard/user");
+    console.log(req.body);
+    res.json("/dashboard/user");
   });
 
    // REMOVE WHEN DEPLOYING Test to ensure we are receiving user login data from server after login.
-   app.get("/api/userinfo", function(req, res){
+  app.get("/api/userinfo", function(req, res){
     if(!req.user){
       res.json({message: "No user"});
     } else {

@@ -32,7 +32,7 @@ module.exports = function(app, io) {
           entry.editable = true;
           relTables.push(entry);
 
-          db.User.getShared({include: ["Task", "Cheri", "Creator"]}).then(function(dbLists) {
+          dbUser.getShared({include: ["Task", "Cheri", "Creator"]}).then(function(dbLists) {
             
             dbLists.forEach(function(entry) {
               entry.editable = entry.category === "Shared" ? true : false;
@@ -40,7 +40,7 @@ module.exports = function(app, io) {
             });
 
             res.render("dashboard", {
-              lists: data
+              lists: relTables
             });
           });
         });

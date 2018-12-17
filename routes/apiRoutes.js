@@ -99,9 +99,7 @@ module.exports = function(app) {
 
   app.put("/api/task/checkbox", function (req, res) {
     db.Task.update({ completed: req.body.completed }, { where: { id: req.body.id } }).then(function (data) {
-
         res.json(data);
-
     });
   });
 

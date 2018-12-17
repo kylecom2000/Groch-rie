@@ -83,7 +83,9 @@
                           {{text}}
                       </div>
                       </div>
+
                     {{else}}
+
                       <div class="item">
                       <div class="right floated content">
                           <div class="ui checkbox" data-completed={{this.completed}} data-id={{this.id}}>
@@ -98,7 +100,7 @@
                     {{/if}}
                   {{/each}}
               </div>
-              <div class="ui fluid large teal submit button reuse-list-btn" data-id={{this.id}}>Reuse</div>
+              <div class="ui large fluid teal submit button reuse-list-btn" data-id={{this.id}}>Reuse</div>
           </div>
         </div>
           {{/each}}
@@ -107,6 +109,7 @@
     </div>
 
 </div>
+<div id="testing"></div>
 
 {{!-- <div class="ui bottom attached tab segment" data-tab="third">
     Wallet

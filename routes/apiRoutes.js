@@ -66,23 +66,24 @@ module.exports = function(app, io) {
   app.post("/api/task/create", function(req, res) {
     const newTask = req.body;
     newTask.originatorId = req.user ? req.user.id : 1;
-    
+
     db.Task.create(newTask).then(function(data) {
       res.json(data);
-      
+
+      newTask.taskId = data.dataValues.id;
       newTask.nickName = req.user ? req.user.nickName : "bob";
       // Find the sockets of the people who are relevant to that list and broadcast to them.
       emitToList(req.body.listId, "task-create", newTask);
-      
+
     });
   });
 
   app.delete("/api/task/delete/:id", function (req, res) {
 
-    // Find the list before deleting the item 
+    // Find the list before deleting the item
     db.Task.findOne({ where: { id: req.params.id }, include: ["List"] })
-      .then(function (data) {
-        const targetListId = data.list.id;
+      .then(function () {
+        const targetListId = req.params.id;
 
 
         db.Task.destroy({ where: { id: req.params.id } }).then(function (data) {

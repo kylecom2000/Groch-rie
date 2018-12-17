@@ -78,7 +78,7 @@ $(document).ready(function() {
       var createTask = {
           text: $("#new-item-input").val().trim(),
           price: 0,
-          listId: 1,
+          listId: $("#new-item-id").data("id"),
           originatorId: 1
       };
 
@@ -103,18 +103,40 @@ $(document).ready(function() {
   });
 
   // click event for deleting an existing task
-  $(".delete-item-button").click(function() {
-      event.preventDefault();
+  $("#appended-tasks").on("click", ".delete-item-button", function() {
+    event.preventDefault();
 
-      const taskId = $(this).data("id");
-      $.ajax({
-          method: "DELETE",
-          url: "/api/task/delete/" + taskId,
-      }).then(function() {
-          console.log("testing delete ajax");
-        //   window.location.href = "/dashboard/user";
-      });
+    const taskId = $(this).data("id");
+    $.ajax({
+        method: "DELETE",
+        url: "/api/task/delete/" + taskId,
+    }).then(function() {
+        $("#" + taskId).remove();
+    });
   });
-  
-  // var socket = io.connect(window.location);
+
+
+  var socket = io({transports: ["websocket"], upgrade: false});
+  socket.on("task-create", function(message) {
+      console.log(message);
+      $("#appended-tasks").append(
+  `
+  <div id=${message.taskId}>
+      <span class="content" style="padding-left: 0px">${message.text}</span>
+      <span class="delete-item-button" style="float:right" data-id=${message.taskId}><i class="red large minus square icon"></i></span>
+      <p style="font-size:12px">Added by: ${message.nickName}</p>
+      <hr>
+  </div>
+  `
+      );
+  });
+
+  socket.on("task-update", function(message) {
+      console.log(message);
+  });
+
+  socket.on("task-delete", function(message) {
+      console.log(message);
+  });
+
 });

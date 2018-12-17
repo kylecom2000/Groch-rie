@@ -52,11 +52,12 @@ socket.on("task-create", function(message) {
     console.log(message);
     $("#appended-tasks").append(
 `
-<div>
+<div id=${message.taskId}>
     <span class="content" style="padding-left: 0px">${message.text}</span>
-    <span class="delete-item-button" style="float:right" data-id=${message.id}><i class="red large minus square icon"></i></span>
+    <span class="delete-item-button" style="float:right" data-id=${message.taskId}><i class="red large minus square icon"></i></span>
     <p style="font-size:12px">Added by: ${message.nickName}</p>
-</div><hr>
+    <hr>
+</div>
 `
     );
 })

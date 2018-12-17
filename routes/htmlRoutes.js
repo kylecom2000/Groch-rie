@@ -19,7 +19,7 @@ module.exports = function(app, io) {
 
     const thisUser = req.user ? req.user.id : 1;
     io.on("connection", function (socket) {
-      db.User.update({currentSocket: socket.id}, {where: {id: lastUser}}).then(() => {
+      db.User.update({currentSocket: socket.id}, {where: {id: thisUser}}).then(() => {
       });
     });
 

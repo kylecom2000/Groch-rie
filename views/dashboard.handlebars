@@ -44,3 +44,20 @@
 {{!-- <div class="ui bottom attached tab segment" data-tab="third">
     Wallet
 </div> --}}
+
+<script>
+
+var socket = io({transports: ['websocket'], upgrade: false});
+socket.on("task-create", function(message) {
+    console.log(message);
+})
+
+socket.on("task-update", function(message) {
+    console.log(message);
+})
+
+socket.on("task-delete", function(message) {
+    console.log(message);
+})
+
+</script>

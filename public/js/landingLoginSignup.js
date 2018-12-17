@@ -38,7 +38,6 @@ $(document).ready(function() {
             userName: $("#email").val().trim(),
             password: $("#password").val().trim()
         };
-        
         loginUser(login.userName, login.password);
             $("#email").val("");
             $("#password").val("");

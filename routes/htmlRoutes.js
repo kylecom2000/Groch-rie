@@ -15,7 +15,7 @@ module.exports = function(app, io) {
   });
 
   app.get("/dashboard/user", function(req, res) {
-
+    console.log("/dashboard/user route hit");
 
     const thisUser = req.user ? req.user.id : 1;
     io.on("connection", function (socket) {

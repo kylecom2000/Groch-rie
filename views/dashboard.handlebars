@@ -1,54 +1,53 @@
-<div class="ui top attached tabular menu">
-    <a class="item active" data-tab="first">Manage</a>
-    <a class="item" data-tab="second">Shop</a>
-    {{!-- <a class="item" data-tab="third">Wallet</a> --}}
-</div>
+<div id="dash-body">
+    <div class="ui top attached tabular menu">
+        <a class="item active" data-tab="first">Manage</a>
+        <a class="item" data-tab="second">Shop</a>
+        {{!-- <a class="item" data-tab="third">Wallet</a> --}}
+    </div>
+    <br><br>
+    <div class="container">
 
-<br><br>
+        {{!-- MANAGE TAB --}}
 
-<div class="container">
+        <div class="ui bottom attached tab segment active" data-tab="first">
+            <h1>Manage Lists</h1>
 
-    {{!-- MANAGE TAB --}}
-
-    <div class="ui bottom attached tab segment active" data-tab="first">
-        <h1>Manage Lists</h1>
-
-        <div class="ui styled accordion" style="padding-left: 5px">
-            <div class="title">
-                <span><input type="text" id="new-list-input" placeholder="Add new list..."></input>
-                    <span class="new-list-button" data-id="new-list" style="padding-left: 10px"><i class="large file icon"></i></i></span>
-                </span>
-            </div>
-        </div>
-
-        <div class="ui styled accordion">
-
-            {{#each lists}}
-
+            <div class="ui styled accordion">
                 <div class="title">
-                    <i class="dropdown icon"></i>
-                    {{this.title}}
-                    <span class="delete-list-button" style="float:right" data-id={{this.id}}><i class=" large minus square icon"></i></span>
-                    <span class="add-user-button" style="float:right"><i class="large user plus icon"></i></span>
+                    <span class="ui form" ><input type="text" id="new-list-input" placeholder="Add new list..."></input>
+                        <span class="new-list-button" data-id="new-list"><i class="large file icon"></i></i></span>
+                    </span>
                 </div>
+            </div>
 
-                <div class="content">
-                    <div style="padding-top:20px; padding-left:5px" class="ui middle aligned divided list">
+            <div class="ui styled accordion">
 
-                        <div><input type="text" id="new-item-input" placeholder="Enter a new item..."></input>
-                            <span class="new-item-button" data-id="new-item"><i class="teal large plus square icon" style="float:right"></i></span>
-                        </div><hr>
+                {{#each lists}}
 
-                        {{#each this.Task}}
-                            <div>
-                                <span class="content" style="padding-left: 0px">{{this.text}}</span>
-                                <span class="delete-item-button" style="float:right" data-id={{this.id}}><i class="red large minus square icon"></i></span>
-                                <p style="font-size:12px">Added by: {{this.originatorId}}</p>
-                            </div><hr>
-                        {{/each}}
-
+                    <div class="title">
+                        <i class="dropdown icon"></i>
+                        {{this.title}}
+                        <span class="delete-list-button" style="float:right" data-id={{this.id}}><i class=" large minus square icon"></i></span>
+                        <span class="add-user-button" style="float:right;padding-right:5px"><i class="large user plus icon"></i></span>
                     </div>
-                </div>
+
+                    <div class="content">
+                        <div style="padding-top:20px; padding-left:5px" class="ui middle aligned divided list">
+
+                            <div class="ui form"><input type="text" id="new-item-input" placeholder="Enter a new item..."></input>
+                                <span class="new-item-button" data-id="new-item"><i class="teal large plus square icon" style="float:right"></i></span>
+                            </div><hr>
+
+                            {{#each this.Task}}
+                                <div>
+                                    <span class="content" style="padding-left: 0px">{{this.text}}</span>
+                                    <span class="delete-item-button" style="float:right" data-id={{this.id}}><i class="red large minus square icon"></i></span>
+                                    <p style="font-size:12px">Added by: {{this.originatorId}}</p>
+                                </div><hr>
+                            {{/each}}
+
+                        </div>
+                    </div>
 
             {{/each}}
 
@@ -104,10 +103,15 @@
           </div>
         </div>
           {{/each}}
+      <div style="margin-top:20px;text-align:center">
+          <div class="ui buttons">
+              <button class="ui negative button">Cancel</button>
+              <div class="or"></div>
+              <button class="ui button">Checkout</button>
+          </div>
+      </div>
 
-        </div>
     </div>
-
 </div>
 <div id="testing"></div>
 
@@ -208,7 +212,7 @@ $(".new-item-button").click(function(event) {
 
 });
 
-// click event for deleting an existin list
+// click event for deleting an existing list
 $(".delete-list-button").click(function() {
     event.preventDefault();
 
@@ -222,7 +226,7 @@ $(".delete-list-button").click(function() {
     });
 });
 
-// click event for deleting an existin task
+// click event for deleting an existing task
 $(".delete-item-button").click(function() {
     event.preventDefault();
 

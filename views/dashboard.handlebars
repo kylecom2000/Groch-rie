@@ -20,91 +20,18 @@
             </div>
 
             <div class="ui styled accordion">
-
-                {{#each lists}}
-
-                    <div class="title">
-                        <i class="dropdown icon"></i>
-                        {{this.title}}
-                        <span class="delete-list-button" style="float:right" data-id={{this.id}}><i class=" large minus square icon"></i></span>
-                        <span class="add-user-button" style="float:right;padding-right:5px"><i class="large user plus icon"></i></span>
-                    </div>
-
-                    <div class="content">
-                        <div style="padding-top:20px; padding-left:5px" class="ui middle aligned divided list">
-
-                            <div class="ui form"><input type="text" id="new-item-input" placeholder="Enter a new item..."></input>
-                                <span class="new-item-button" data-id="new-item"><i class="teal large plus square icon" style="float:right"></i></span>
-                            </div><hr>
-
-                            {{#each this.Task}}
-                                <div>
-                                    <span class="content" style="padding-left: 0px">{{this.text}}</span>
-                                    <span class="delete-item-button" style="float:right" data-id={{this.id}}><i class="red large minus square icon"></i></span>
-                                    <p style="font-size:12px">Added by: {{this.originatorId}}</p>
-                                </div><hr>
-                            {{/each}}
-
-                        </div>
-                    </div>
-
-                {{/each}}
-
+              {{> lists/list-block }}
             </div>
+
         </div>
 
     {{!-- SHOP TAB --}}
     <div class="ui bottom tab segment" data-tab="second">
         <h1> Go Shopping </h1>
         <div class="ui styled accordion">
-
-        {{#each lists}}
-            <div class="list">
-
-                <div class="title">
-                    <i class="dropdown icon"></i>
-                    {{this.title}}
-                </div>
-
-                <div class="content">
-                    <div style="padding-top:20px" class="ui middle aligned divided list">
-
-                        <!-- Prints out list item for each task -->
-                        {{#each this.Task}}
-
-                            {{#if this.completed}}
-                                <div class="item">
-                                    <div class="right floated content">
-                                        <div class="ui checkbox" data-completed={{this.completed}} data-id={{this.id}}>
-                                            <input checked type="checkbox" name="example">
-                                            <label></label>
-                                        </div>
-                                    </div>
-                                    <div class="content">
-                                        {{text}}
-                                    </div>
-                                </div>
-                            {{else}}
-                                <div class="item">
-                                    <div class="right floated content">
-                                        <div class="ui checkbox" data-completed={{this.completed}} data-id={{this.id}}>
-                                            <input type="checkbox" name="example">
-                                            <label></label>
-                                        </div>
-                                    </div>
-                                    <div class="content">
-                                        {{text}}
-                                    </div>
-                                </div>
-                            {{/if}}
-                        {{/each}}
-
-                    </div>
-                    <div class="ui large fluid teal submit button reuse-list-btn" data-id={{this.id}}>Reuse</div>
-                </div>
-            </div>
-        {{/each}}
+        {{> lists/task-block }}
     </div>
+
     <div style="margin-top:20px;text-align:center">
         <div class="ui buttons">
             <button class="ui negative button">Cancel</button>
@@ -114,133 +41,6 @@
     </div>
 </div>
 
-<div id="testing"></div>
-
 {{!-- <div class="ui bottom attached tab segment" data-tab="third">
     Wallet
 </div> --}}
-
-<script type="text/javascript">
-// semantic tabs js
-$('.menu .item')
-    .tab()
-;
-
-// semantic accordion js
-$('.ui.accordion')
-    .accordion()
-;
-
-// On checkbox click
-$('.checkbox').on('click', function(event){
-  const taskId = $(this).data("id");
-  let isComplete = $(this).data("completed");
-
-  // If task is not complete, set to true, else set as false
-  if (!isComplete) {
-    isComplete = true;
-    $(this).attr("data-completed", true)
-  } else {
-    isComplete = false;
-    $(this).attr("data-completed", false)
-  };
-
-  let updateTask = {
-    id: taskId,
-    completed: isComplete
-  };
-
-  $.ajax({
-    method: "PUT",
-    url: "/api/task/checkbox",
-    data: updateTask
-  })
-});
-
-// click event for reusing an existin list and changes values to uncompleted
-$(".reuse-list-btn").click(function() {
-    event.preventDefault();
-
-    const listId = $(this).data("id");
-
-    let reuseList = {
-      id: listId
-    };
-
-    $.ajax({
-        method: "PUT",
-        url: "/api/list/reuse/",
-        data: reuseList
-    }).then(function() {
-        window.location.href = "/dashboard/user";
-    });
-});
-
-// click event for adding a new user to an existing list
-$(".add-user-button").click(function() {
-    alert("Add User");
-    console.log($(this).data("class"));
-});
-
-// click event for creating a new list
-$(".new-list-button").click(function() {
-    var createList = {
-        title: $("#new-list-input").val().trim(),
-        category: "Shared",
-        creatorId: 1
-    };
-    console.log(createList);
-
-    $.post("/api/list/create", createList, function() {
-        console.log(createList);
-        window.location.href = "/dashboard/user";
-    });
-});
-
-// click event for creating a new task
-$(".new-item-button").click(function(event) {
-
-    var createTask = {
-        text: $("#new-item-input").val().trim(),
-        price: 0,
-        listId: 1,
-        originatorId: 1
-    };
-
-    $.post("/api/task/create", createTask, function() {
-        window.location.href = "/dashboard/user";
-    });
-
-});
-
-// click event for deleting an existing list
-$(".delete-list-button").click(function() {
-    event.preventDefault();
-
-    const listId = $(this).data("id");
-    $.ajax({
-        method: "DELETE",
-        url: "/api/list/delete/" + listId,
-    }).then(function() {
-        console.log("testing delete ajax")
-        window.location.href = "/dashboard/user";
-    });
-});
-
-// click event for deleting an existing task
-$(".delete-item-button").click(function() {
-    event.preventDefault();
-
-    const taskId = $(this).data("id");
-    $.ajax({
-        method: "DELETE",
-        url: "/api/task/delete/" + taskId,
-    }).then(function() {
-        console.log("testing delete ajax")
-        window.location.href = "/dashboard/user";
-    });
-});
-
-// var socket = io.connect(window.location);
-
-</script>

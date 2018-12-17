@@ -121,6 +121,8 @@ module.exports = function(app, io) {
         });
 
     });
+  });
+
 
   // Sets all of the checks for particular list to uncompleted
   app.put("/api/list/reuse/", function(req, res) {

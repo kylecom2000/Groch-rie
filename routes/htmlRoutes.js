@@ -19,10 +19,11 @@ module.exports = function(app, io) {
 
     const thisUser = req.user ? req.user.id : 1;
     io.on("connection", function (socket) {
-      db.User.update({currentSocket: socket.id}, {where: {id: thisUser}}).then(() => {
-      });
+      db.User.update(
+        {currentSocket: socket.id}, 
+        {where: {id: thisUser}}
+      );
     });
-
     const relTables = [];
     // This code block identifies the user, retrieves tables relevant to them, marked shared tables as editable or not depending on their category, and then sends the result to the renderer.
     db.User.findOne({where: { id: thisUser}}).then(function(dbUser) {

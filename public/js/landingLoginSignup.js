@@ -12,12 +12,12 @@ $(document).ready(function() {
     });
 
     // Signup Page JS
-    $("#submitSignUpBtn").on("click", (event) => {
-        let login = {
+    $("#submitSignUpBtn").click(function() {
+        const login = {
         userName: $("#email").val().trim(),
         nickName: $("#name").val().trim(),
         password: $("#password").val().trim()
-        }
+        };
         signUpUser(login);
     });
     
@@ -33,12 +33,11 @@ $(document).ready(function() {
     }
     
     // Login Page JS
-    $("#submitBtn").on("click", (event) => {
-        let login = {
+    $("#submitBtn").click(function() {
+        const login = {
             userName: $("#email").val().trim(),
             password: $("#password").val().trim()
-        }
-
+        };
         loginUser(login.userName, login.password);
             $("#email").val("");
             $("#password").val("");

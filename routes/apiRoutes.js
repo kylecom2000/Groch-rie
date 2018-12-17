@@ -36,13 +36,9 @@ module.exports = function(app, io) {
     res.json("/dashboard/user");
   });
 
-   // REMOVE WHEN DEPLOYING Test to ensure we are receiving user login data from server after login.
-  app.get("/api/userinfo", function(req, res){
-    if(!req.user){
-      res.json({message: "No user"});
-    } else {
-      res.json(req.user);
-    }
+  app.get("/api/user/logout", function(req, res){
+    req.logout();
+    res.redirect("/");
   });
 
   // For list

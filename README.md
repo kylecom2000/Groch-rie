@@ -1,16 +1,15 @@
 # UT Coding Boot Camp Team Project
-
+![Grochèrie](https://github.com/kylecom2000/Project2/blob/master/public/images/grocherie-logo.png?raw=true)
 # Grochérie
-## A Shared Shopping List App.
+## A Shared Gorcery Shopping List App.
 
 # [Deployed on Heroku](https://grocherie.herokuapp.com/)
 
-#### Team Members
-Project Two - Team Six
-* Kyle Bauer - (Jobs)
-* Clayton Bondy - (Jobs)
-* Brian Duong - (Jobs)
-* Colin Grant - (Jobs)
+#### Main Contributers
+* Kyle Bauer - Authentication
+* Clayton Bondy - Design
+* Brian Duong - Handlebars
+* Colin Grant - Web Sockets
 
 ### Objectives
 * Node and Express
@@ -26,10 +25,26 @@ Project Two - Team Six
 ### Nice-To-Haves
 * Handlebars
 * Authtenttication
-* Existing public dataset
+* Semantic UI
+* Web Sockets
+* ~~Existing public dataset~~
 
 ### Workflow
-
-### 
+  * Landing Page
+    * Route to Signup
+    * Route to Login
+  * Signup
+    * Email Address
+    * Username
+    * Password
+    * Route to Login on Submit
+  * Login
+    * Email Address
+    * Password
+    * Passport Authenticated Route to Dashboard
+  * Dashboard
+    * Add a list
+    * Add an item
+    * Live Update of checklist.
 
 

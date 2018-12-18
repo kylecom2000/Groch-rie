@@ -1,11 +1,11 @@
 # UT Coding Boot Camp Team Project
-![Grochèrie](https://github.com/kylecom2000/Project2/blob/master/public/images/grocherie-logo.png?raw=true)
+![Grochèrie](https://github.com/kylecom2000/Project2/blob/master/public/images/grocherie-text.png?raw=true)
 # Grochérie
 ## A Shared Gorcery Shopping List App.
 
 # [Deployed on Heroku](https://grocherie.herokuapp.com/)
 
-#### Main Contributers
+### Main Contributers
 * Kyle Bauer - Authentication
 * Clayton Bondy - Design
 * Brian Duong - Handlebars
@@ -27,7 +27,6 @@
 * Authtenttication
 * Semantic UI
 * Web Sockets
-* ~~Existing public dataset~~
 
 ### Workflow
   * Landing Page

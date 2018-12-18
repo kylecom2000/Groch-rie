@@ -35,13 +35,25 @@ module.exports = function(app, io) {
       });
     });
     const relTables = [];
+
+    db.User.findAll({attributes: ["id", "nickName"]}).then(function(dbUsersAll) {
+      const userDirectory = {};
+      dbUsersAll.forEach(function(entry) {
+        userDirectory[entry.id] = entry.nickName;
+      });
+
+
     // This code block identifies the user, retrieves tables relevant to them, marked shared tables as editable or not depending on their category, and then sends the result to the renderer.
-    db.User.findOne({ where: { id: thisUser } }).then(function (dbUser) {
+    db.User.findOne({ where: { id: 3 } }).then(function (dbUser) {
+
 
       dbUser.getWishlist({ include: ["Task", "Cheri", "Creator"] }).then(function (dbLists) {
         dbLists.forEach(function (entry) {
           delete entry.dataValues.Creator.dataValues.password;
           entry.editable = true;
+          entry.Task.forEach(function(taskEntry) {
+            taskEntry.originatorId = userDirectory[taskEntry.originatorId];
+          });
           relTables.push(entry);
         });
 
@@ -50,8 +62,12 @@ module.exports = function(app, io) {
           dbLists.forEach(function (entry) {
             delete entry.dataValues.Creator.dataValues.password;
             entry.editable = entry.category === "Shared" ? true : false;
+            entry.Task.forEach(function(taskEntry) {
+              taskEntry.originatorId = userDirectory[taskEntry.originatorId];
+            });
             relTables.push(entry);
           });
+
           res.render("dashboard", {
             lists: relTables
           });
@@ -59,6 +75,7 @@ module.exports = function(app, io) {
       });
     });
 
+  });
   });
 
   // Render 404 page for any unmatched routes

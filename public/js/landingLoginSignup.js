@@ -1,5 +1,5 @@
 $(document).ready(function() {
-
+    //==========================================
     // Landing Page JS
     $("#login-btn").click(function() {
         console.log($(this).data("id"));
@@ -11,6 +11,7 @@ $(document).ready(function() {
         window.location = "signup";
     });
 
+    //==========================================
     // Signup Page JS
     $("#submitSignUpBtn").click(function() {
         const login = {
@@ -31,7 +32,8 @@ $(document).ready(function() {
         $("#alert .msg").text(err.responseJSON);
         $("#alert").fadeIn(500);
     }
-    
+
+    //==========================================
     // Login Page JS
     $("#submitBtn").click(function() {
         const login = {

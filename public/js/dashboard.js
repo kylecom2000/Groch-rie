@@ -2,10 +2,11 @@ $(document).ready(function() {
   // Semantic events
   $(".menu .item").tab();
   $(".ui.accordion").accordion();
-
+  
   // // On checkbox click
   $(".append-task").on("click", ".checkbox", function() {
     const taskId = $(this).data("id");
+
     let isComplete = $(this).data("completed");
 
     // If task is not complete, set to true, else set as false
@@ -19,7 +20,7 @@ $(document).ready(function() {
       $(this).attr("data-completed", false);
     }
 
-    const updateTask = {
+    var updateTask = {
       id: taskId,
       completed: isComplete
     };
@@ -31,15 +32,14 @@ $(document).ready(function() {
     });
   });
 
-
   // click event for reusing an existin list
   // and changes values to uncompleted
   $(".reuse-list-btn").click(function() {
       event.preventDefault();
 
-      const listId = $(this).data("id");
+      var listId = $(this).data("id");
 
-      const reuseList = {
+      var reuseList = {
         id: listId
       };
 
@@ -48,10 +48,9 @@ $(document).ready(function() {
           url: "/api/list/reuse/",
           data: reuseList
       }).then(function() {
-        //   window.location.href = "/dashboard/user";
+
       });
   });
-
 
   // click event for adding a new user to an existing list
   $(".add-user-button").click(function() {
@@ -83,48 +82,45 @@ $(document).ready(function() {
           creatorId: 1
       };
       console.log(createList);
-
       $.post("/api/list/create", createList, function(data) {
           console.log(data);
-        //   window.location.href = "/dashboard/user";
+          displayLists(data.title, data.id);
       });
   });
 
-  // click event for creating a new task
-  $(".new-item-button").click(function() {
-
-      var createTask = {
-          text: $("#new-item-input").val().trim(),
-          price: 0,
-          listId: $("#new-item-id").data("id"),
-          originatorId: 1
-      };
-
-      $.post("/api/task/create", createTask, function() {
-        //   window.location.href = "/dashboard/user";
+  // click event for creating a new task from list
+  $(".appended-lists").on("click", ".new-item-button", function() {
+    event.preventDefault();
+    const textId = $(this).data("id");
+    var createTask = {
+        text: $("[data-boxId= " + textId + "]").val().trim(),
+        price: 0,
+        listId: $(this).data("id")
+    };
+    console.log(createTask + "first");
+    $.post("/api/task/create", createTask, function(data) {
+        console.log(createTask);
+        console.log(data);
       });
-
   });
 
   // click event for deleting an existing list
   $(".delete-list-button").click(function() {
       event.preventDefault();
-
-      const listId = $(this).data("id");
+      var listId = $(this).data("id");
       $.ajax({
           method: "DELETE",
           url: "/api/list/delete/" + listId,
       }).then(function() {
           console.log("testing delete ajax");
-        //   window.location.href = "/dashboard/user";
       });
   });
 
-  // click event for deleting an existing task
-  $("#appended-tasks").on("click", ".delete-item-button", function() {
+  // click event for deleting an existing task from new list
+  $(".appended-lists").on("click", ".delete-item-button", function() {
     event.preventDefault();
 
-    const taskId = $(this).data("id");
+    var taskId = $(this).data("id");
     $.ajax({
         method: "DELETE",
         url: "/api/task/delete/" + taskId,
@@ -137,45 +133,48 @@ $(document).ready(function() {
     window.location.href = "/api/user/logout";
     });
 
+    //   SOCKETS
+    var socket = io({transports: ["websocket"], upgrade: false});
+    socket.on("task-create", function(message) {
+        console.log(message);
+        $("#appended-tasks" + message.listId).append(
+`
+<div id=${message.taskId}>
+    <span class="content" style="padding-left: 0px">${message.text}</span>
+    <span class="delete-item-button" style="float:right" data-id=${message.taskId}><i class="red large minus square icon"></i></span>
+    <p style="font-size:12px">Added by: ${message.nickName}</p>
+    <hr>
+</div>
+`
+        );
+    });
 
-  //   websockets
-  var socket = io({transports: ["websocket"], upgrade: false});
-  socket.on("task-create", function(message) {
-      console.log(message);
-      $("#appended-tasks").append(
-  `
-  <div id=${message.taskId}>
-      <span class="content" style="padding-left: 0px">${message.text}</span>
-      <span class="delete-item-button" style="float:right" data-id=${message.taskId}><i class="red large minus square icon"></i></span>
-      <p style="font-size:12px">Added by: ${message.nickName}</p>
-      <hr>
-  </div>
-  `
-      );
+    socket.on("task-update", function(message) {
+        console.log(message);
+    });
 
-      $(".append-task").append(
-        `
-        <div class="item">
-            <div class="right floated content">
-                <div class="ui checkbox" data-completed=${message.completed} data-id=${message.taskId}>
-                    <input type="checkbox" name="example">
-                    <label></label>
-                </div>
-            </div>
-            <div class="content">
-                ${message.text}
-            </div>
+    socket.on("task-delete", function(message) {
+        console.log(message);
+    });
+
+    function displayLists(title, id) {
+        $(".appended-lists").append(
+`
+<div class="title">
+    <i class="dropdown icon"></i>
+    ${title}
+    <span class="delete-list-button" style="float:right" data-id=${id}><i class=" large minus square icon"></i></span>
+    <span class="add-user-button" style="float:right;padding-right:5px"><i class="large user plus icon"></i></span>
+</div>
+<div class="content">
+    <div style="padding-top:20px; padding-left:5px" class="ui middle aligned divided list">
+        <div class="ui form" style="padding-bottom: 20px"><input type="text" data-boxId=${id} id="new-item-input" placeholder="Enter a new item..."></input>
+            <span class="new-item-button" id="new-item-id" data-id=${id}><i class="teal large plus square icon" style="float:right"></i></span>
         </div>
-        `
-      );
-  });
-
-  socket.on("task-update", function(message) {
-    console.log(message);
-  });
-
-  socket.on("task-delete", function(message) {
-      console.log(message);
-  });
-
+        <div id="appended-tasks${id}"></div>
+    </div>
+</div>
+`
+        );
+    }
 });

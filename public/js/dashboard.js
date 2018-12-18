@@ -31,7 +31,7 @@ $(document).ready(function() {
 
   // click event for reusing an existin list
   // and changes values to uncompleted
-  $(".reuse-list-btn").click(function() {
+  $(".reuse-list-btn").click(function(event) {
       event.preventDefault();
 
       var listId = $(this).data("id");
@@ -44,8 +44,6 @@ $(document).ready(function() {
           method: "PUT",
           url: "/api/list/reuse/",
           data: reuseList
-      }).then(function() {
-
       });
   });
 
@@ -86,7 +84,7 @@ $(document).ready(function() {
   });
 
   // click event for creating a new task from list
-  $(".appended-lists").on("click", ".new-item-button", function() {
+  $(".appended-lists").on("click", ".new-item-button", function(event) {
     event.preventDefault();
     const textId = $(this).data("id");
     var createTask = {
@@ -102,7 +100,7 @@ $(document).ready(function() {
   });
 
   // click event for deleting an existing list
-  $(".delete-list-button").click(function() {
+  $(".delete-list-button").click(function(event) {
       event.preventDefault();
       var listId = $(this).data("id");
       $.ajax({
@@ -114,15 +112,13 @@ $(document).ready(function() {
   });
 
   // click event for deleting an existing task from new list
-  $(".appended-lists").on("click", ".delete-item-button", function() {
+  $(".appended-lists").on("click", ".delete-item-button", function(event) {
     event.preventDefault();
 
     var taskId = $(this).data("id");
     $.ajax({
         method: "DELETE",
         url: "/api/task/delete/" + taskId,
-    }).then(function() {
-        
     });
   });
 

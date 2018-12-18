@@ -3,16 +3,18 @@ $(document).ready(function() {
   $(".menu .item").tab();
   $(".ui.accordion").accordion();
 
-  // On checkbox click
-  $(".checkbox").on("click", function(){
+  // // On checkbox click
+  $(".append-task").on("click", ".checkbox", function() {
     const taskId = $(this).data("id");
     let isComplete = $(this).data("completed");
 
     // If task is not complete, set to true, else set as false
     if (!isComplete) {
+      console.log("!iscomplete");
       isComplete = true;
       $(this).attr("data-completed", true);
     } else {
+      console.log("falseasda");
       isComplete = false;
       $(this).attr("data-completed", false);
     }
@@ -129,10 +131,26 @@ $(document).ready(function() {
   </div>
   `
       );
+
+      $(".append-task").append(
+        `
+        <div class="item">
+            <div class="right floated content">
+                <div class="ui checkbox" data-completed=${message.completed} data-id=${message.taskId}>
+                    <input type="checkbox" name="example">
+                    <label></label>
+                </div>
+            </div>
+            <div class="content">
+                ${message.text}
+            </div>
+        </div>
+        `
+      );
   });
 
   socket.on("task-update", function(message) {
-      console.log(message);
+    console.log(message);
   });
 
   socket.on("task-delete", function(message) {

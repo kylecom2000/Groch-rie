@@ -44,7 +44,7 @@ module.exports = function(app, io) {
 
 
     // This code block identifies the user, retrieves tables relevant to them, marked shared tables as editable or not depending on their category, and then sends the result to the renderer.
-    db.User.findOne({ where: { id: 3 } }).then(function (dbUser) {
+    db.User.findOne({ where: { id: req.user.id } }).then(function (dbUser) {
 
 
       dbUser.getWishlist({ include: ["Task", "Cheri", "Creator"] }).then(function (dbLists) {

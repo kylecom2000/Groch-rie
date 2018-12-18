@@ -2,22 +2,24 @@ var db = require("../models");
 const isAuthenticated = require("../config/middleware/isAuthenticated");
 
 module.exports = function(app, io) {
-  // Load index page
+  // Load index landing page
   app.get("/", function(req, res) {
     res.render("index");
   });
 
+  // Route for login page.
   app.get("/login", function(req, res) {
     res.render("login");
   });
 
+  // Route for signup page.
   app.get("/signup", function(req, res) {
     res.render("signup");
   });
 
 
+  // Route for dashboard with authentication and loading user's lists.
   app.get("/dashboard/user", isAuthenticated, function (req, res) {
-
     const thisUser = req.user ? req.user.id : 1;
     io.on("connection", function (socket) {
       db.User.update(

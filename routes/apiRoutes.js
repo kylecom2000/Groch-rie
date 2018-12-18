@@ -30,35 +30,35 @@ module.exports = function(app, io) {
     });
   });
 
-  // User logins
+  // User login
   app.post("/api/user/login", passport.authenticate("local"), function(req, res) {
     console.log(req.body);
     res.json("/dashboard/user");
   });
 
+  // User log out
   app.get("/api/user/logout", function(req, res){
     req.logout();
     res.redirect("/");
   });
 
-  // For list
+  // Post request for list
   app.post("/api/list/create", function(req, res) {
     newList = req.body;
     newList.creatorId = req.user ? req.user.id : 1;
     db.List.create(req.body).then(function(data) {
       res.json(data);
     });
-
-    
   });
 
+  // Delete request
   app.delete("/api/list/delete/:id", function(req, res) {
     db.List.destroy({where: {id: req.params.id}}).then(function(data) {
       res.json(data);
     });
   });
 
-  // For Task
+  // Post request for Task
   app.post("/api/task/create", function(req, res) {
     const newTask = req.body;
     newTask.originatorId = req.user ? req.user.id : 1;
@@ -74,6 +74,7 @@ module.exports = function(app, io) {
     });
   });
 
+  // Delete task
   app.delete("/api/task/delete/:id", function (req, res) {
 
     // Find the list before deleting the item
@@ -102,6 +103,7 @@ module.exports = function(app, io) {
     });
   });
 
+  //  Update route for checkboxes.
   app.put("/api/task/checkbox", function (req, res) {
     const taskCompleter = req.user ? req.user.id : 1;
     db.Task.update({ completed: req.body.completed, completerId: taskCompleter}, { where: { id: req.body.id } }).then(function (dbUpdate) {

@@ -25,8 +25,18 @@ module.exports = function(app, io) {
 
   // Since the user is being created, all the data is coming in the body.
   app.post("/api/user/signup", function(req, res) {
-    db.User.create(req.body).then(function() {
-      res.json("/login");
+    db.User.findOne({where: {userName: req.body.userName}}).then(function(user) {
+      if(user){
+        res.json({
+          success:false,
+          data: {},
+          error: ["This email address is not valid or already used."]
+        });
+      } else {
+        db.User.create(req.body).then(function() {
+          res.json("/login");
+        });
+      }
     });
   });
 

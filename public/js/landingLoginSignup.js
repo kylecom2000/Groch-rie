@@ -24,7 +24,11 @@ $(document).ready(function() {
     
     function signUpUser(login){
         $.post("/api/user/signup", login).then(function(data){
-        window.location.replace(data);
+            if (data.success === false) {
+                alert(data.error[0]);
+            } else {
+                window.location.replace(data);
+            }
         // If there's an error, handle it by throwing up a bootstrap alert
         }).catch(handleLoginErr);
     }

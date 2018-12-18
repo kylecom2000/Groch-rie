@@ -137,15 +137,16 @@ $(document).ready(function() {
     var socket = io({transports: ["websocket"], upgrade: false});
     socket.on("task-create", function(message) {
         console.log(message);
+
         $("#appended-tasks" + message.listId).append(
-`
-<div id=${message.taskId}>
-    <span class="content" style="padding-left: 0px">${message.text}</span>
-    <span class="delete-item-button" style="float:right" data-id=${message.taskId}><i class="red large minus square icon"></i></span>
-    <p style="font-size:12px">Added by: ${message.nickName}</p>
-    <hr>
-</div>
-`
+        `
+        <div id=${message.taskId}>
+            <span class="content" style="padding-left: 0px">${message.text}</span>
+            <span class="delete-item-button" style="float:right" data-id=${message.taskId}><i class="red large minus square icon"></i></span>
+            <p style="font-size:12px">Added by: ${message.nickName}</p>
+            <hr>
+        </div>
+        `
         );
     });
 
@@ -159,22 +160,22 @@ $(document).ready(function() {
 
     function displayLists(title, id) {
         $(".appended-lists").append(
-`
-<div class="title">
-    <i class="dropdown icon"></i>
-    ${title}
-    <span class="delete-list-button" style="float:right" data-id=${id}><i class=" large minus square icon"></i></span>
-    <span class="add-user-button" style="float:right;padding-right:5px"><i class="large user plus icon"></i></span>
-</div>
-<div class="content">
-    <div style="padding-top:20px; padding-left:5px" class="ui middle aligned divided list">
-        <div class="ui form" style="padding-bottom: 20px"><input type="text" data-boxId=${id} id="new-item-input" placeholder="Enter a new item..."></input>
-            <span class="new-item-button" id="new-item-id" data-id=${id}><i class="teal large plus square icon" style="float:right"></i></span>
+        `
+        <div class="title">
+            <i class="dropdown icon"></i>
+            ${title}
+            <span class="delete-list-button" style="float:right" data-id=${id}><i class=" large minus square icon"></i></span>
+            <span class="add-user-button" style="float:right;padding-right:5px"><i class="large user plus icon"></i></span>
         </div>
-        <div id="appended-tasks${id}"></div>
-    </div>
-</div>
-`
+        <div class="content">
+            <div style="padding-top:20px; padding-left:5px" class="ui middle aligned divided list">
+                <div class="ui form" style="padding-bottom: 20px"><input type="text" data-boxId=${id} id="new-item-input" placeholder="Enter a new item..."></input>
+                    <span class="new-item-button" id="new-item-id" data-id=${id}><i class="teal large plus square icon" style="float:right"></i></span>
+                </div>
+                <div id="appended-tasks${id}"></div>
+            </div>
+        </div>
+        `
         );
     }
 });

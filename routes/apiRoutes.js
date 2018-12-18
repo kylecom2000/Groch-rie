@@ -116,18 +116,16 @@ module.exports = function(app, io) {
 
   //  Update route for checkboxes.
   app.put("/api/task/checkbox", function (req, res) {
-    console.log(req);
-    const taskCompleter = req.user ? req.user.id : 1;
+    const taskCompleter = req.body.completed ? req.user.id : null;
     db.Task.update({ completed: req.body.completed, completerId: taskCompleter}, { where: { id: req.body.id } }).then(function (dbUpdate) {
-      console.log(dbUpdate);
       res.json(dbUpdate);
 
       db.Task.findOne({ where: { id: req.body.id }, include: ["List"] })
         .then(function (data) {
 
-          const message = {id: req.body.id};
-          console.log(req.body);
-          message.completerNick = req.user ? req.user.nickName : "bob";
+          const message = req.body;
+          message.completerNick = req.user.nickName;
+          message.completerId = taskCompleter;
           // Find the sockets of the people who are relevant to that list and broadcast to them.
           emitToList(data.List.id, "task-update", message);
 

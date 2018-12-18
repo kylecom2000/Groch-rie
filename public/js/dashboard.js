@@ -6,16 +6,13 @@ $(document).ready(function() {
   // // On checkbox click
   $(".append-task").on("click", ".checkbox", function() {
     const taskId = $(this).data("id");
-
-    let isComplete = $(this).data("completed");
+    let isComplete = $(this).attr("data-completed");
 
     // If task is not complete, set to true, else set as false
-    if (!isComplete) {
-      console.log("!iscomplete");
+    if (isComplete==="false") {
       isComplete = true;
       $(this).attr("data-completed", true);
     } else {
-      console.log("falseasda");
       isComplete = false;
       $(this).attr("data-completed", false);
     }

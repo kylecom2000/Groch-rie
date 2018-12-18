@@ -25,11 +25,33 @@
                     </div>
                 {{/each}}
 
-
                 </div>
 
             </div>
         </div>
+        
+    {{!-- ADD USER MODAL --}}
+    <div class="ui modal" data-modalId={{this.id}}>
+      <i class="close icon"></i>
+      <div class="header">
+        Add user by email
+      </div>
+      <div class="content">
+        <form class="ui form">
+          <div class="field">
+            <input type="text" name="first-name" placeholder="Email" id="new-user">
+          </div>
+        </form>
+      </div>
+      <div class="actions">
+        <div class="ui black deny button">
+          Cancel
+        </div>
+        <div class="ui positive right labeled icon button" id="add-user-btn" data-listId={{this.id}}>
+          Yep, that's me
+        </div>
+      </div>
+    </div>
 
-    {{/each}}
+{{/each}}
 </div>

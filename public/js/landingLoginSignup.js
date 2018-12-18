@@ -1,5 +1,5 @@
 $(document).ready(function() {
-
+    //==========================================
     // Landing Page JS
     $("#login-btn").click(function() {
         console.log($(this).data("id"));
@@ -11,6 +11,7 @@ $(document).ready(function() {
         window.location = "signup";
     });
 
+    //==========================================
     // Signup Page JS
     $("#submitSignUpBtn").click(function() {
         const login = {
@@ -23,7 +24,11 @@ $(document).ready(function() {
     
     function signUpUser(login){
         $.post("/api/user/signup", login).then(function(data){
-        window.location.replace(data);
+            if (data.success === false) {
+                alert(data.error[0]);
+            } else {
+                window.location.replace(data);
+            }
         // If there's an error, handle it by throwing up a bootstrap alert
         }).catch(handleLoginErr);
     }
@@ -31,7 +36,8 @@ $(document).ready(function() {
         $("#alert .msg").text(err.responseJSON);
         $("#alert").fadeIn(500);
     }
-    
+
+    //==========================================
     // Login Page JS
     $("#submitBtn").click(function() {
         const login = {

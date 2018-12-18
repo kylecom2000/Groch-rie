@@ -2,17 +2,20 @@ $(document).ready(function() {
   // Semantic events
   $(".menu .item").tab();
   $(".ui.accordion").accordion();
+  
+  // // On checkbox click
+  $(".append-task").on("click", ".checkbox", function() {
+    const taskId = $(this).data("id");
 
-  // On checkbox click
-  $(".checkbox").on("click", function(){
-    var taskId = $(this).data("id");
     let isComplete = $(this).data("completed");
 
     // If task is not complete, set to true, else set as false
     if (!isComplete) {
+      console.log("!iscomplete");
       isComplete = true;
       $(this).attr("data-completed", true);
     } else {
+      console.log("falseasda");
       isComplete = false;
       $(this).attr("data-completed", false);
     }
@@ -51,8 +54,24 @@ $(document).ready(function() {
 
   // click event for adding a new user to an existing list
   $(".add-user-button").click(function() {
-      alert("Add User");
-      console.log($(this).data("class"));
+    $(".ui.modal").modal("show");
+  });
+
+  $("#add-user-btn").on("click", function() {
+    const listId = $(this).data("listid");
+    const newEmail = $("#new-user").val().trim();
+
+    const newUser = {
+      listId: listId,
+      users: newEmail
+    };
+
+    $.ajax({
+        method: "PUT",
+        url: "/api/list/share/",
+        data: newUser
+    });
+    console.log(newUser);
   });
 
   // click event for creating a new list
@@ -110,6 +129,9 @@ $(document).ready(function() {
     });
   });
 
+  $("#logout-button").click(function() {
+    window.location.href = "/api/user/logout";
+    });
 
     //   SOCKETS
     var socket = io({transports: ["websocket"], upgrade: false});
@@ -156,5 +178,3 @@ $(document).ready(function() {
         );
     }
 });
-
-

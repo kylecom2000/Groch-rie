@@ -25,40 +25,49 @@ module.exports = function(app, io) {
 
   // Since the user is being created, all the data is coming in the body.
   app.post("/api/user/signup", function(req, res) {
-    db.User.create(req.body).then(function() {
-      res.json("/login");
+    db.User.findOne({where: {userName: req.body.userName}}).then(function(user) {
+      if(user){
+        res.json({
+          success:false,
+          data: {},
+          error: ["This email address is not valid or already used."]
+        });
+      } else {
+        db.User.create(req.body).then(function() {
+          res.json("/login");
+        });
+      }
     });
   });
 
-  // User logins
+  // User login
   app.post("/api/user/login", passport.authenticate("local"), function(req, res) {
-    console.log(req.body);
     res.json("/dashboard/user");
   });
 
+  // User log out
   app.get("/api/user/logout", function(req, res){
     req.logout();
     res.redirect("/");
   });
 
-  // For list
+  // Post request for list
   app.post("/api/list/create", function(req, res) {
     newList = req.body;
     newList.creatorId = req.user ? req.user.id : 1;
     db.List.create(req.body).then(function(data) {
       res.json(data);
     });
-
-    
   });
 
+  // Delete request
   app.delete("/api/list/delete/:id", function(req, res) {
     db.List.destroy({where: {id: req.params.id}}).then(function(data) {
       res.json(data);
     });
   });
 
-  // For Task
+  // Post request for Task
   app.post("/api/task/create", function(req, res) {
     const newTask = req.body;
     newTask.originatorId = req.user ? req.user.id : 1;
@@ -74,6 +83,7 @@ module.exports = function(app, io) {
     });
   });
 
+  // Delete task
   app.delete("/api/task/delete/:id", function (req, res) {
 
     // Find the list before deleting the item
@@ -94,15 +104,19 @@ module.exports = function(app, io) {
   });
 
   // This route assumes that the desired sharers appear in the req.body as follows: {users: [nickNames]}
-  app.put("/api/list/share", function(req, res) {
-    db.User.findAll({where: {nickName: req.body.users}}).then(function (data) {
-      db.List.addCheri(data).then(function(data2) {
-        res.json(data2);
+  app.put("/api/list/share", function (req, res) {
+    db.List.findOne({ where: { id: req.body.listId } }).then(function (dbList) {
+      db.User.findAll({ where: { userName: req.body.users } }).then(function (dbUsers) {
+        dbList.addCheri(dbUsers).then(function (data2) {
+          res.json(data2);
+        });
       });
     });
   });
 
+  //  Update route for checkboxes.
   app.put("/api/task/checkbox", function (req, res) {
+    console.log(req);
     const taskCompleter = req.user ? req.user.id : 1;
     db.Task.update({ completed: req.body.completed, completerId: taskCompleter}, { where: { id: req.body.id } }).then(function (dbUpdate) {
       console.log(dbUpdate);
@@ -112,6 +126,7 @@ module.exports = function(app, io) {
         .then(function (data) {
 
           const message = {id: req.body.id};
+          console.log(req.body);
           message.completerNick = req.user ? req.user.nickName : "bob";
           // Find the sockets of the people who are relevant to that list and broadcast to them.
           emitToList(data.List.id, "task-update", message);

@@ -105,6 +105,7 @@ module.exports = function(app, io) {
 
   //  Update route for checkboxes.
   app.put("/api/task/checkbox", function (req, res) {
+    console.log(req);
     const taskCompleter = req.user ? req.user.id : 1;
     db.Task.update({ completed: req.body.completed, completerId: taskCompleter}, { where: { id: req.body.id } }).then(function (dbUpdate) {
       console.log(dbUpdate);
@@ -114,6 +115,7 @@ module.exports = function(app, io) {
         .then(function (data) {
 
           const message = {id: req.body.id};
+          console.log(req.body);
           message.completerNick = req.user ? req.user.nickName : "bob";
           // Find the sockets of the people who are relevant to that list and broadcast to them.
           emitToList(data.List.id, "task-update", message);

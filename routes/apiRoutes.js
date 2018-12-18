@@ -87,9 +87,9 @@ module.exports = function(app, io) {
   app.delete("/api/task/delete/:id", function (req, res) {
 
     // Find the list before deleting the item
-    db.Task.findOne({ where: { id: req.params.id }, include: ["List"] })
-      .then(function () {
-        const targetListId = req.params.id;
+    db.Task.findOne({ where: { id: req.params.id }})
+      .then(function (dbTask) {
+        const targetListId = dbTask.listId;
 
 
         db.Task.destroy({ where: { id: req.params.id } }).then(function (data) {

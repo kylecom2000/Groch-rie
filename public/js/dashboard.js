@@ -122,7 +122,7 @@ $(document).ready(function() {
         method: "DELETE",
         url: "/api/task/delete/" + taskId,
     }).then(function() {
-        $("#" + taskId).remove();
+        
     });
   });
 
@@ -152,7 +152,7 @@ $(document).ready(function() {
     });
 
     socket.on("task-delete", function(message) {
-        console.log(message);
+        $("#" + message).remove();
     });
 
     function displayLists(title, id) {

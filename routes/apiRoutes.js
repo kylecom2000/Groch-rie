@@ -106,10 +106,12 @@ module.exports = function(app, io) {
 
   // This route assumes that the desired sharers appear in the req.body as follows: {users: [nickNames]}
   app.put("/api/list/share", function (req, res) {
+    console.log(req.body);
     db.List.findOne({ where: { id: req.body.listId } }).then(function (dbList) {
       db.User.findAll({ where: { userName: req.body.users } }).then(function (dbUsers) {
         dbList.addCheri(dbUsers).then(function (data2) {
           res.json(data2);
+          console.log(data2);
         });
       });
     });

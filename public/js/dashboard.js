@@ -55,8 +55,24 @@ $(document).ready(function() {
 
   // click event for adding a new user to an existing list
   $(".add-user-button").click(function() {
-      alert("Add User");
-      console.log($(this).data("class"));
+    $(".ui.modal").modal("show");
+  });
+
+  $("#add-user-btn").on("click", function() {
+    const listId = $(this).data("listid");
+    const newEmail = $("#new-user").val().trim();
+
+    const newUser = {
+      listId: listId,
+      users: newEmail
+    };
+
+    $.ajax({
+        method: "PUT",
+        url: "/api/list/share/",
+        data: newUser
+    });
+    console.log(newUser);
   });
 
   // click event for creating a new list

@@ -1,32 +1,35 @@
-{{#each lists}}
 
-    <div class="title">
-        <i class="dropdown icon"></i>
-        {{this.title}}
-        <span class="delete-list-button" style="float:right" data-id={{this.id}}><i class=" large minus square icon"></i></span>
-        <span class="add-user-button" style="float:right;padding-right:5px"><i class="large user plus icon"></i></span>
-    </div>
+<div class="appended-lists">
+    {{#each lists}}
 
-    <div class="content">
-        <div style="padding-top:20px; padding-left:5px" class="ui middle aligned divided list">
-
-            <div class="ui form" style="padding-bottom: 20px"><input type="text" id="new-item-input" placeholder="Enter a new item..."></input>
-                <span class="new-item-button" id="new-item-id" data-id={{this.id}}><i class="teal large plus square icon" style="float:right"></i></span>
-            </div>
-            <div id="appended-tasks">
-            {{#each this.Task}}
-                <div id={{this.id}}>
-                    <span class="content" style="padding-left: 0px">{{this.text}}</span>
-                    <span class="delete-item-button" style="float:right" data-id={{this.id}}><i class="red large minus square icon"></i></span>
-                    <p style="font-size:12px">Added by: {{this.originatorId}}</p>
-                    <hr>
-                </div>
-            {{/each}}
-
-
-            </div>
-
+        <div class="title">
+            <i class="dropdown icon"></i>
+            {{this.title}}
+            <span class="delete-list-button" style="float:right" data-id={{this.id}}><i class=" large minus square icon"></i></span>
+            <span class="add-user-button" style="float:right;padding-right:5px"><i class="large user plus icon"></i></span>
         </div>
-    </div>
 
-{{/each}}
+        <div class="content">
+            <div style="padding-top:20px; padding-left:5px" class="ui middle aligned divided list">
+
+                <div class="ui form" style="padding-bottom: 20px"><input type="text" data-boxId={{this.id}} placeholder="Enter a new item..."></input>
+                    <span class="new-item-button" id="new-item-id" data-id={{this.id}}><i class="teal large plus square icon" style="float:right"></i></span>
+                </div>
+                <div id="appended-tasks{{this.id}}">
+                {{#each this.Task}}
+                    <div id={{this.id}}>
+                        <span class="content" style="padding-left: 0px">{{this.text}}</span>
+                        <span class="delete-item-button" style="float:right" data-id={{this.id}}><i class="red large minus square icon"></i></span>
+                        <p style="font-size:12px">Added by: {{this.originatorId}}</p>
+                        <hr>
+                    </div>
+                {{/each}}
+
+
+                </div>
+
+            </div>
+        </div>
+
+    {{/each}}
+</div>

@@ -98,3 +98,15 @@ hr {
 .ui.styled.accordion {
   margin:auto;
 }
+
+#logout-button {
+z-index:1;
+background:#00B9B0;
+color:white;
+position:absolute;
+padding-top:15px;
+padding-bottom:13px;
+border-radius: 6px 6px 0px 0px;
+top:14;
+right:-4;
+}

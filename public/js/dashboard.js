@@ -115,7 +115,12 @@ $(document).ready(function() {
     });
   });
 
+  $("#logout-button").click(function() {
+    window.location.href = "/api/user/logout";
+    });
 
+
+  //   websockets
   var socket = io({transports: ["websocket"], upgrade: false});
   socket.on("task-create", function(message) {
       console.log(message);

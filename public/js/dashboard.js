@@ -3,6 +3,14 @@ $(document).ready(function() {
   $(".menu .item").tab();
   $(".ui.accordion").accordion();
 
+  // On enter of an input
+  $(".textEnter").keyup(function(e){
+    if(e.keyCode === 13)
+      {
+          $(this).trigger("enterKey");
+      }
+  });
+
   // // On checkbox click
   $(".append-task").on("click", ".checkbox", function() {
     const taskId = $(this).data("id");
@@ -69,7 +77,7 @@ $(document).ready(function() {
     console.log(newUser);
   });
 
-  // click event for creating a new list
+  // event for creating a new list
   $(".new-list-button").click(function() {
       var createList = {
           title: $("#new-list-input").val().trim(),
@@ -82,6 +90,22 @@ $(document).ready(function() {
           shopLists(data.title, data.id);
           displayLists(data.title, data.id);
       });
+      $("#new-list-input").val("");
+  });
+
+  $("#new-list-input").on("enterKey",function(){
+    var createList = {
+        title: $("#new-list-input").val().trim(),
+        category: "Shared",
+        creatorId: 1
+    };
+    console.log(createList);
+    $.post("/api/list/create", createList, function(data) {
+        console.log(data);
+        shopLists(data.title, data.id);
+        displayLists(data.title, data.id);
+    });
+    $("#new-list-input").val("");
   });
 
   // click event for creating a new task from list
@@ -100,10 +124,10 @@ $(document).ready(function() {
         console.log(data);
         shopTasks(data.text, data.id, data.listId, data.completed);
       });
+    $("[data-boxId= " + textId + "]").val("");
   });
 
   function shopTasks(text, id, listId, completed) {
-    console.log("testing");
     console.log(text, id, listId, completed);
     $("[data-list-id='" + listId + "']").append(
       `
@@ -175,7 +199,6 @@ $(document).ready(function() {
     });
 
     function displayLists(title, id) {
-      console.log("hello");
         $(".appended-lists").append(
         `
         <div class="title">
@@ -186,7 +209,7 @@ $(document).ready(function() {
         </div>
         <div class="content">
             <div style="padding-top:20px; padding-left:5px" class="ui middle aligned divided list">
-                <div class="ui form" style="padding-bottom: 20px"><input type="text" data-boxId=${id} id="new-item-input" placeholder="Enter a new item..."></input>
+                <div class="ui form" style="padding-bottom: 20px"><input type="text" class="textEnter" data-boxId=${id} id="new-item-input" placeholder="Enter a new item..."></input>
                     <span class="new-item-button" id="new-item-id" data-id=${id}><i class="teal large plus square icon" style="float:right"></i></span>
                 </div>
                 <div id="appended-tasks${id}"></div>

@@ -63,11 +63,11 @@ $(document).ready(function() {
       users: newEmail
     };
 
-    // $.ajax({
-    //     method: "PUT",
-    //     url: "/api/list/share/",
-    //     data: newUser
-    // });
+    $.ajax({
+        method: "PUT",
+        url: "/api/list/share/",
+        data: newUser
+    });
     console.log(newUser);
   });
 

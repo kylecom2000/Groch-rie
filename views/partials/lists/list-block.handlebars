@@ -1,7 +1,7 @@
 
 <div class="appended-lists">
     {{#each lists}}
-
+      <div data-listid={{this.id}}>
         <div class="title">
             <i class="dropdown icon"></i>
             {{this.title}}
@@ -29,7 +29,7 @@
 
             </div>
         </div>
-        
+
     {{!-- ADD USER MODAL --}}
     <div class="ui modal" data-modalId={{this.id}}>
       <i class="close icon"></i>
@@ -52,6 +52,6 @@
         </div>
       </div>
     </div>
-
+  </div>
 {{/each}}
 </div>

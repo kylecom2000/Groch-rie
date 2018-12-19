@@ -128,10 +128,11 @@ $(document).ready(function() {
   });
 
   function shopTasks(text, id, listId, completed) {
+    console.log("testing");
     console.log(text, id, listId, completed);
     $("[data-list-id='" + listId + "']").append(
       `
-      <div class="item">
+      <div class="item" data-delete-id=${id}>
           <div class="right floated content">
               <div class="ui checkbox" data-id=${id}>
                   <input type="checkbox" name="example" data-completed=${completed}>
@@ -156,6 +157,7 @@ $(document).ready(function() {
       }).then(function() {
           console.log("testing delete ajax");
       });
+      $("[data-listid='" + listId + "']").remove();
   });
 
   // click event for deleting an existing task from new list
@@ -167,6 +169,8 @@ $(document).ready(function() {
         method: "DELETE",
         url: "/api/task/delete/" + taskId,
     });
+
+    $("[data-delete-id='" + taskId + "']").remove();
   });
 
   $("#logout-button").click(function() {
@@ -180,7 +184,7 @@ $(document).ready(function() {
 
         $("#appended-tasks" + message.listId).append(
         `
-        <div id=${message.taskId} style="padding-left:10px">
+        <div data-delete-id=${message.taskId} style="padding-left:10px">
             <span>${message.text}</span>
             <span class="delete-item-button" style="float:right" data-id=${message.taskId}><i class="red large minus square icon"></i></span>
             <p style="font-size:12px">Added by: ${message.nickName}</p>
@@ -195,25 +199,27 @@ $(document).ready(function() {
     });
 
     socket.on("task-delete", function(message) {
-        $("#" + message).remove();
+        $("[data-delete-id='" + message + "']").remove();
     });
 
     function displayLists(title, id) {
         $(".appended-lists").append(
         `
-        <div class="title">
-            <i class="dropdown icon"></i>
-            ${title}
-            <span class="delete-list-button" style="float:right" data-id=${id}><i class=" large minus square icon"></i></span>
-            <span class="add-user-button" style="float:right;padding-right:5px"><i class="large user plus icon"></i></span>
-        </div>
-        <div class="content">
-            <div style="padding:10px 0px 0px 5px"" class="ui middle aligned divided list">
-                <div class="ui form" style="padding-bottom: 20px"><input type="text" class="textEnter" data-boxId=${id} id="new-item-input" placeholder="Enter a new item..."></input>
-                    <span class="new-item-button" id="new-item-id" data-id=${id}><i class="teal large plus square icon" style="float:right"></i></span>
-                </div>
-                <div id="appended-tasks${id}"></div>
-            </div>
+        <div data-listid=${id}>
+          <div class="title">
+              <i class="dropdown icon"></i>
+              ${title}
+              <span class="delete-list-button" style="float:right" data-id=${id}><i class=" large minus square icon"></i></span>
+              <span class="add-user-button" style="float:right;padding-right:5px"><i class="large user plus icon"></i></span>
+          </div>
+          <div class="content">
+              <div style="padding:10px 0px 0px 5px" class="ui middle aligned divided list">
+                  <div class="ui form" style="padding-bottom: 20px"><input type="text" class="textEnter" data-boxId=${id} id="new-item-input" placeholder="Enter a new item..."></input>
+                      <span class="new-item-button" id="new-item-id" data-id=${id}><i class="teal large plus square icon" style="float:right"></i></span>
+                  </div>
+                  <div id="appended-tasks${id}"></div>
+              </div>
+          </div>
         </div>
         `
         );
@@ -222,6 +228,7 @@ $(document).ready(function() {
     function shopLists(title, id) {
       $(".shop-lists").append(
       `
+    <div data-listId=${id}>
       <div class="title">
           <i class="dropdown icon"></i>
           ${title}
@@ -230,6 +237,7 @@ $(document).ready(function() {
           <div style="padding-top:20px" class="ui middle aligned divided list append-task" data-list-id=${id}>
           </div>
       </div>
+    </div>
       `
       );
     }

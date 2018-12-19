@@ -1,6 +1,6 @@
 <div class="shop-lists">
   {{#each lists}}
-      <div class="list">
+      <div data-listid={{this.id}}>
 
           <div class="title">
               <i class="dropdown icon"></i>
@@ -8,14 +8,14 @@
           </div>
 
           <div class="content">
-              <div style="padding-top:20px" class="ui middle aligned divided list append-task">
+              <div style="padding-top:20px" class="ui middle aligned divided list append-task" data-list-id={{this.id}}>
 
                   <!-- Prints out list item for each task -->
 
                   {{#each this.Task}}
 
                       {{#if this.completed}}
-                          <div class="item">
+                          <div class="item" data-delete-id={{this.id}}>
                               <div class="right floated content">
                                   <div class="ui checkbox" data-completed={{this.completed}} data-id={{this.id}}>
                                       <input checked type="checkbox" name="example">

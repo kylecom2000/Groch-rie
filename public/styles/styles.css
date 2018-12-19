@@ -7,7 +7,7 @@ body {
 
 /* Landing Page */
 
-#landing-body {
+#init-body {
   text-align:center;
 }
 
@@ -27,9 +27,13 @@ body {
 
 /* Login Page */
 
-body > .grid {
-  height: 100%;
+#init-title {
+  display:block;
+  margin:65px auto 0px auto;
+  width:80%;
+  max-width:400px;
 }
+
 .image {
   margin-top: -100px;
 }
@@ -37,7 +41,8 @@ body > .grid {
   max-width: 450px;
 }
 .ui.stacked.segment {
-  margin:0px 20px 0px 20px;
+  margin:0px auto 20px auto;
+  max-width:400px;
 }
 
 /* Dashboard Page */
@@ -86,7 +91,7 @@ hr {
   border-radius:10px;
   background:#00B9B0;
   box-shadow: 2px 2px 2px grey;
-  max-width: 1000px;
+  max-width: 900px;
   margin:auto;
 }
 

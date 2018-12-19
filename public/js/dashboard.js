@@ -126,10 +126,11 @@ $(document).ready(function() {
   });
 
   function shopTasks(text, id, listId, completed) {
+    console.log("testing");
     console.log(text, id, listId, completed);
     $("[data-list-id='" + listId + "']").append(
       `
-      <div class="item">
+      <div class="item" data-delete-id=${id}>
           <div class="right floated content">
               <div class="ui checkbox" data-id=${id}>
                   <input type="checkbox" name="example" data-completed=${completed}>
@@ -166,6 +167,8 @@ $(document).ready(function() {
         method: "DELETE",
         url: "/api/task/delete/" + taskId,
     });
+
+    $("[data-delete-id='" + taskId + "']").remove();
   });
 
   $("#logout-button").click(function() {

@@ -184,8 +184,8 @@ $(document).ready(function() {
 
         $("#appended-tasks" + message.listId).append(
         `
-        <div data-delete-id=${message.taskId}>
-            <span class="content" style="padding-left: 0px">${message.text}</span>
+        <div data-delete-id=${message.taskId} style="padding-left:10px">
+            <span>${message.text}</span>
             <span class="delete-item-button" style="float:right" data-id=${message.taskId}><i class="red large minus square icon"></i></span>
             <p style="font-size:12px">Added by: ${message.nickName}</p>
             <hr>
@@ -213,7 +213,7 @@ $(document).ready(function() {
               <span class="add-user-button" style="float:right;padding-right:5px"><i class="large user plus icon"></i></span>
           </div>
           <div class="content">
-              <div style="padding-top:20px; padding-left:5px" class="ui middle aligned divided list">
+              <div style="padding:10px 0px 0px 5px" class="ui middle aligned divided list">
                   <div class="ui form" style="padding-bottom: 20px"><input type="text" class="textEnter" data-boxId=${id} id="new-item-input" placeholder="Enter a new item..."></input>
                       <span class="new-item-button" id="new-item-id" data-id=${id}><i class="teal large plus square icon" style="float:right"></i></span>
                   </div>

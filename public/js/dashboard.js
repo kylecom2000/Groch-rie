@@ -156,6 +156,7 @@ $(document).ready(function() {
       }).then(function() {
           console.log("testing delete ajax");
       });
+      $("[data-listid='" + listId + "']").remove();
   });
 
   // click event for deleting an existing task from new list
@@ -201,19 +202,21 @@ $(document).ready(function() {
     function displayLists(title, id) {
         $(".appended-lists").append(
         `
-        <div class="title">
-            <i class="dropdown icon"></i>
-            ${title}
-            <span class="delete-list-button" style="float:right" data-id=${id}><i class=" large minus square icon"></i></span>
-            <span class="add-user-button" style="float:right;padding-right:5px"><i class="large user plus icon"></i></span>
-        </div>
-        <div class="content">
-            <div style="padding-top:20px; padding-left:5px" class="ui middle aligned divided list">
-                <div class="ui form" style="padding-bottom: 20px"><input type="text" class="textEnter" data-boxId=${id} id="new-item-input" placeholder="Enter a new item..."></input>
-                    <span class="new-item-button" id="new-item-id" data-id=${id}><i class="teal large plus square icon" style="float:right"></i></span>
-                </div>
-                <div id="appended-tasks${id}"></div>
-            </div>
+        <div data-listid=${id}>
+          <div class="title">
+              <i class="dropdown icon"></i>
+              ${title}
+              <span class="delete-list-button" style="float:right" data-id=${id}><i class=" large minus square icon"></i></span>
+              <span class="add-user-button" style="float:right;padding-right:5px"><i class="large user plus icon"></i></span>
+          </div>
+          <div class="content">
+              <div style="padding-top:20px; padding-left:5px" class="ui middle aligned divided list">
+                  <div class="ui form" style="padding-bottom: 20px"><input type="text" class="textEnter" data-boxId=${id} id="new-item-input" placeholder="Enter a new item..."></input>
+                      <span class="new-item-button" id="new-item-id" data-id=${id}><i class="teal large plus square icon" style="float:right"></i></span>
+                  </div>
+                  <div id="appended-tasks${id}"></div>
+              </div>
+          </div>
         </div>
         `
         );

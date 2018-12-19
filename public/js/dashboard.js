@@ -2,7 +2,7 @@ $(document).ready(function() {
   // Semantic events
   $(".menu .item").tab();
   $(".ui.accordion").accordion();
-  
+
   // // On checkbox click
   $(".append-task").on("click", ".checkbox", function() {
     const taskId = $(this).data("id");
@@ -79,6 +79,7 @@ $(document).ready(function() {
       console.log(createList);
       $.post("/api/list/create", createList, function(data) {
           console.log(data);
+          shopLists(data.title, data.id);
           displayLists(data.title, data.id);
       });
   });
@@ -90,14 +91,36 @@ $(document).ready(function() {
     var createTask = {
         text: $("[data-boxId= " + textId + "]").val().trim(),
         price: 0,
-        listId: $(this).data("id")
+        listId: $(this).data("id"),
+        completed: false
     };
     console.log(createTask + "first");
     $.post("/api/task/create", createTask, function(data) {
         console.log(createTask);
         console.log(data);
+        shopTasks(data.text, data.id, data.listId, data.completed);
       });
   });
+
+  function shopTasks(text, id, listId, completed) {
+    console.log("testing");
+    console.log(text, id, listId, completed);
+    $("[data-list-id='" + listId + "']").append(
+      `
+      <div class="item">
+          <div class="right floated content">
+              <div class="ui checkbox" data-id=${id}>
+                  <input type="checkbox" name="example" data-completed=${completed}>
+                  <label></label>
+              </div>
+          </div>
+          <div class="content">
+              ${text}
+          </div>
+      </div>
+      `
+    );
+  }
 
   // click event for deleting an existing list
   $(".delete-list-button").click(function(event) {
@@ -152,6 +175,7 @@ $(document).ready(function() {
     });
 
     function displayLists(title, id) {
+      console.log("hello");
         $(".appended-lists").append(
         `
         <div class="title">
@@ -170,5 +194,20 @@ $(document).ready(function() {
         </div>
         `
         );
+    }
+
+    function shopLists(title, id) {
+      $(".shop-lists").append(
+      `
+      <div class="title">
+          <i class="dropdown icon"></i>
+          ${title}
+      </div>
+      <div class="content">
+          <div style="padding-top:20px" class="ui middle aligned divided list append-task" data-list-id=${id}>
+          </div>
+      </div>
+      `
+      );
     }
 });

@@ -55,15 +55,9 @@ $(document).ready(function() {
       });
   });
 
-  // click event for adding a new user to an existing list
-  $(".add-user-button").click(function() {
-    $(".ui.modal").modal("show");
-  });
-
-  $("#add-user-btn").on("click", function() {
+  $(".appended-lists > .modal").on("click", "#add-user-btn", function() {
     const listId = $(this).data("listid");
-    const newEmail = $("#new-user").val().trim();
-
+    const newEmail = $("#input" + listId).val().trim();
     const newUser = {
       listId: listId,
       users: newEmail
@@ -76,6 +70,12 @@ $(document).ready(function() {
     });
     console.log(newUser);
   });
+
+  $(".appended-lists").on("click", ".add-user-button", function() {
+    modalId = $(this).data("userid");
+    $("#modal" + modalId).modal("show");
+  });
+
 
   // event for creating a new list
   $(".new-list-button").click(function() {
@@ -210,7 +210,7 @@ $(document).ready(function() {
               <i class="dropdown icon"></i>
               ${title}
               <span class="delete-list-button" style="float:right" data-id=${id}><i class=" large minus square icon"></i></span>
-              <span class="add-user-button" style="float:right;padding-right:5px"><i class="large user plus icon"></i></span>
+              <span class="add-user-button" data-userId=${id} style="float:right;padding-right:5px"><i class="large user plus icon"></i></span>
           </div>
           <div class="content">
               <div style="padding:10px 0px 0px 5px" class="ui middle aligned divided list">
@@ -219,6 +219,28 @@ $(document).ready(function() {
                   </div>
                   <div id="appended-tasks${id}"></div>
               </div>
+          </div>
+        </div>
+
+        <div class="ui modal" id="modal${id}" data-modalId=${id}>
+          <i class="close icon"></i>
+          <div class="header">
+            Add user by email
+          </div>
+          <div class="content">
+            <form class="ui form">
+              <div class="field">
+                <input type="text" name="first-name" placeholder="Email" id="input${id}">
+              </div>
+            </form>
+          </div>
+          <div class="actions">
+            <div class="ui black deny button">
+              Cancel
+            </div>
+            <div class="ui positive right labeled icon button" id="add-user-btn" data-listId=${id}>
+              Yep, that's me
+            </div>
           </div>
         </div>
         `

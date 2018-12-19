@@ -6,7 +6,7 @@
             <i class="dropdown icon"></i>
             {{this.title}}
             <span class="delete-list-button" style="float:right" data-id={{this.id}}><i class=" large minus square icon"></i></span>
-            <span class="add-user-button" style="float:right;padding-right:5px"><i class="large user plus icon"></i></span>
+            <span class="add-user-button" data-userId={{this.id}} style="float:right;padding-right:5px"><i class="large user plus icon"></i></span>
         </div>
 
         <div class="content">
@@ -31,7 +31,7 @@
         </div>
 
     {{!-- ADD USER MODAL --}}
-    <div class="ui modal" data-modalId={{this.id}}>
+    <div class="ui modal" id="modal{{this.id}}" data-modalId={{this.id}}>
       <i class="close icon"></i>
       <div class="header">
         Add user by email
@@ -39,7 +39,7 @@
       <div class="content">
         <form class="ui form">
           <div class="field">
-            <input type="text" name="first-name" placeholder="Email" id="new-user">
+            <input type="text" name="first-name" placeholder="Email" id="input{{this.id}}">
           </div>
         </form>
       </div>

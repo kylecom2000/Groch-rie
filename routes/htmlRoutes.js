@@ -1,7 +1,7 @@
 var db = require("../models");
 const isAuthenticated = require("../config/middleware/isAuthenticated");
 
-module.exports = function(app, io) {
+module.exports = function(app) {
   // Load index landing page
   app.get("/", function(req, res) {
     res.render("index");

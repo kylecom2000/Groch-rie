@@ -192,7 +192,14 @@ $(document).ready(function() {
     });
 
     socket.on("task-update", function(message) {
-        console.log(message);
+
+        var targetCheck = $(".checkbox[data-id=" + message.id + "]");
+        if (message.completed === "true") {
+            targetCheck.checkbox("set checked");
+        } else {
+            targetCheck.checkbox("set unchecked");
+        }
+        
     });
 
     socket.on("task-delete", function(message) {

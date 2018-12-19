@@ -1,47 +1,49 @@
-{{#each lists}}
-    <div class="list">
+<div class="shop-lists">
+  {{#each lists}}
+      <div class="list">
 
-        <div class="title">
-            <i class="dropdown icon"></i>
-            {{this.title}}
-        </div>
+          <div class="title">
+              <i class="dropdown icon"></i>
+              {{this.title}}
+          </div>
 
-        <div class="content">
-            <div style="padding-top:20px" class="ui middle aligned divided list append-task">
+          <div class="content">
+              <div style="padding-top:20px" class="ui middle aligned divided list append-task">
 
-                <!-- Prints out list item for each task -->
+                  <!-- Prints out list item for each task -->
 
-                {{#each this.Task}}
+                  {{#each this.Task}}
 
-                    {{#if this.completed}}
-                        <div class="item">
-                            <div class="right floated content">
-                                <div class="ui checkbox" data-completed={{this.completed}} data-id={{this.id}}>
-                                    <input checked type="checkbox" name="example">
-                                    <label></label>
-                                </div>
-                            </div>
-                            <div class="content">
-                                {{text}}
-                            </div>
-                        </div>
-                    {{else}}
-                        <div class="item">
-                            <div class="right floated content">
-                                <div class="ui checkbox" data-completed={{this.completed}} data-id={{this.id}}>
-                                    <input type="checkbox" name="example" id="ask">
-                                    <label></label>
-                                </div>
-                            </div>
-                            <div class="content">
-                                {{text}}
-                            </div>
-                        </div>
-                    {{/if}}
-                {{/each}}
+                      {{#if this.completed}}
+                          <div class="item">
+                              <div class="right floated content">
+                                  <div class="ui checkbox" data-completed={{this.completed}} data-id={{this.id}}>
+                                      <input checked type="checkbox" name="example">
+                                      <label></label>
+                                  </div>
+                              </div>
+                              <div class="content">
+                                  {{text}}
+                              </div>
+                          </div>
+                      {{else}}
+                          <div class="item">
+                              <div class="right floated content">
+                                  <div class="ui checkbox" data-completed={{this.completed}} data-id={{this.id}}>
+                                      <input type="checkbox" name="example" id="ask">
+                                      <label></label>
+                                  </div>
+                              </div>
+                              <div class="content">
+                                  {{text}}
+                              </div>
+                          </div>
+                      {{/if}}
+                  {{/each}}
 
-            </div>
-            <div class="ui large fluid teal submit button reuse-list-btn" data-id={{this.id}}>Reuse</div>
-        </div>
-    </div>
-{{/each}}
+              </div>
+              <div class="ui large fluid teal submit button reuse-list-btn" data-id={{this.id}}>Reuse</div>
+          </div>
+      </div>
+  {{/each}}
+</div>

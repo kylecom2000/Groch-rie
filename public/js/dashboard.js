@@ -19,10 +19,8 @@ $(document).ready(function() {
     // If task is not complete, set to true, else set as false
     if (isComplete==="false") {
       isComplete = true;
-      $(this).attr("data-completed", true);
     } else {
       isComplete = false;
-      $(this).attr("data-completed", false);
     }
 
     var updateTask = {
@@ -195,8 +193,11 @@ $(document).ready(function() {
         var targetCheck = $(".checkbox[data-id=" + message.id + "]");
         if (message.completed === "true") {
             targetCheck.checkbox("set checked");
+            targetCheck.attr("data-completed", true);
         } else {
             targetCheck.checkbox("set unchecked");
+            targetCheck.attr("data-completed", false);
+            
         }
         
     });

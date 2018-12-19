@@ -20,20 +20,7 @@ module.exports = function(app, io) {
 
   // Route for dashboard with authentication and loading user's lists.
   app.get("/dashboard/user", isAuthenticated, function (req, res) {
-    const thisUser = req.user ? req.user.id : 1;
-    io.on("connection", function (socket) {
-      db.User.update(
-        {currentSocket: socket.id}, 
-        {where: {id: thisUser}}
-      );
-
-      socket.on("disconnect", function(){
-        db.User.update(
-          {currentSocket: null},
-          {where: {currentSocket: socket.id}}
-        );
-      });
-    });
+    // console.log(req.session);
     const relTables = [];
 
     db.User.findAll({attributes: ["id", "nickName"]}).then(function(dbUsersAll) {

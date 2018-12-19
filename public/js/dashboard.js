@@ -148,16 +148,16 @@ $(document).ready(function() {
   }
 
   // click event for deleting an existing list
-  $(".delete-list-button").click(function(event) {
-      event.preventDefault();
-      var listId = $(this).data("id");
-      $.ajax({
-          method: "DELETE",
-          url: "/api/list/delete/" + listId,
-      }).then(function() {
-          console.log("testing delete ajax");
-      });
-      $("[data-listid='" + listId + "']").remove();
+  $(".appended-lists").on("click", ".delete-list-button", function(event) {
+    event.preventDefault();
+    var listId = $(this).data("id");
+    $.ajax({
+        method: "DELETE",
+        url: "/api/list/delete/" + listId,
+    }).then(function() {
+        console.log("testing delete ajax");
+    });
+    $("[data-listid='" + listId + "']").remove();
   });
 
   // click event for deleting an existing task from new list

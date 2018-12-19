@@ -13,7 +13,9 @@ $(document).ready(function() {
 
     //==========================================
     // Signup Page JS
-    $("#submitSignUpBtn").click(function() {
+    $("#submitSignUpBtn").click(function(event) {
+        event.preventDefault();
+        window.location = "login";
         const login = {
         userName: $("#email").val().trim(),
         nickName: $("#name").val().trim(),
@@ -21,7 +23,7 @@ $(document).ready(function() {
         };
         signUpUser(login);
     });
-    
+
     function signUpUser(login){
         $.post("/api/user/signup", login).then(function(data){
             if (data.success === false) {
@@ -39,7 +41,8 @@ $(document).ready(function() {
 
     //==========================================
     // Login Page JS
-    $("#submitBtn").click(function() {
+    $("#submitBtn").click(function(event) {
+        event.preventDefault();
         const login = {
             userName: $("#email").val().trim(),
             password: $("#password").val().trim()

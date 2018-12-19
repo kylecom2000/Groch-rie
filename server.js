@@ -74,7 +74,7 @@ db.sequelize.sync({ force: false }).then(function () {
   
         sessionStore.get(handshake.sessionID, function(err, session) {
           // console.log("SESSION STORE: ", session);
-          if (err || !session || !session.passport) {
+          if (err || !session || !session.passport || !session.passport.user) {
             next(new Error("Error or no session."));
           } else {
             // console.log("setting session");
